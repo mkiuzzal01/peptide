@@ -98,7 +98,7 @@ export default function SignUp() {
                 </div>
 
                 {/* SUBMIT */}
-                <SubmitButton text="Sign Up" className="h-12 rounded-lg" />
+                <SubmitButton text="Sign Up" className="h-12 rounded-full" />
                 <div>
                   <p className="text-xs text-gray-700 text-center">
                     Already have an account?{' '}

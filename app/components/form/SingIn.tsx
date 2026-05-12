@@ -90,7 +90,7 @@ export default function Signin() {
                 </div>
                 {/* SUBMIT */}
                 <div className="pt-2">
-                  <SubmitButton text="Sign In" className="h-12 rounded-lg" />
+                  <SubmitButton text="Sign In" className="h-12 rounded-full" />
                 </div>
                 <div>
                   <p className="text-xs text-gray-700 text-center">

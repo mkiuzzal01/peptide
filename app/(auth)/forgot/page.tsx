@@ -1,5 +1,5 @@
-import React from 'react';
+import Forgot from '@/app/components/form/Forgot';
 
 export default function page() {
-  return <div>page</div>;
+  return <Forgot />;
 }

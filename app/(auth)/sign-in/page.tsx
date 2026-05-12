@@ -1,9 +1,5 @@
-import Signin from '@/app/components/form/Signin';
+import Signin from '@/app/components/form/SingIn';
 
 export default function page() {
-  return (
-    <div>
-      <Signin />
-    </div>
-  );
+  return <Signin />;
 }

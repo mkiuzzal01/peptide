@@ -72,6 +72,9 @@
   --ring: oklch(0.62 0.18 255);
 }
 
+button {
+  @apply cursor-pointer;
+}
 /* =========================
    DARK MODE (BLUE GLOW)
 ========================= */

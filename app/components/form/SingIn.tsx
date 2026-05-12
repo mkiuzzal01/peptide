@@ -1,14 +1,14 @@
 'use client';
-
 import { FieldValues } from 'react-hook-form';
 import Container from '../shared/Container';
 import AppForm from './AppForm';
 import TextInput from './input-fields/TextInput';
-import { Lock, Mail, User } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 import Image from 'next/image';
 import SocialLogin from '../utils/SocialLogin';
 import SubmitButton from '../buttons/SubmitButton';
 import logo from '@/public/auth/sign-in.jpg';
+import Link from 'next/link';
 
 export default function Signin() {
   const onSubmit = async (values: FieldValues, reset: () => void) => {
@@ -34,10 +34,10 @@ export default function Signin() {
             {/* HEADER */}
             <div className="flex justify-center items-center flex-col gap-1 mb-8">
               <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-2">
-                Crate your account
+                Sign in to your account
               </h2>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Create your account for secure, seamless ordering
+                Sign in to your account for secure, seamless ordering
               </p>
             </div>
 
@@ -64,14 +64,6 @@ export default function Signin() {
             >
               <div className="space-y-5">
                 <TextInput
-                  icon={<User size={18} />}
-                  label="Full Name"
-                  name="name"
-                  className="h-12"
-                  placeholder="Enter full name"
-                />
-
-                <TextInput
                   icon={<Mail size={18} />}
                   label="Email"
                   name="email"
@@ -88,9 +80,28 @@ export default function Signin() {
                   placeholder="Enter password"
                 />
 
+                <div className="flex items-end gap-2 py-2">
+                  <Link
+                    href="/forgot"
+                    className="text-xs text-gray-700 hover:text-primary transition-colors"
+                  >
+                    Forgot Password?{' '}
+                  </Link>
+                </div>
                 {/* SUBMIT */}
                 <div className="pt-2">
                   <SubmitButton text="Sign In" className="h-12 rounded-lg" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-700 text-center">
+                    Don&apos;t have an account?{' '}
+                    <Link
+                      href="/sign-up"
+                      className="text-primary font-semibold"
+                    >
+                      Sign Up
+                    </Link>
+                  </p>
                 </div>
               </div>
             </AppForm>

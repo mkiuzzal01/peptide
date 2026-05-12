@@ -1,5 +1,5 @@
-import React from 'react';
+import Update from '@/app/components/form/Update';
 
 export default function page() {
-  return <div>page</div>;
+  return <Update />;
 }

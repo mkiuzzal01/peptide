@@ -1,5 +1,5 @@
-import React from 'react';
+import Verify from '@/app/components/form/Verify';
 
 export default function page() {
-  return <div>page</div>;
+  return <Verify />;
 }

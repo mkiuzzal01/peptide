@@ -1,7 +1,13 @@
+import Header from '../components/header/Header';
+import Hero from '../components/hero/Hero';
+import HeroBottom from '../components/hero/HeroBottom';
+
 export default function Home() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Pixelkin</h1>
+      <Hero />
+      <HeroBottom />
+      <Header />
     </div>
   );
 }

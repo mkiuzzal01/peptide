@@ -49,7 +49,9 @@ export default function Navbar() {
             <Bag />
           </button>
 
-          <Action className="rounded-full px-6" name="Sign in" />
+          <Link href={"/sign-in"}>
+            <Action className="rounded-full px-4 py-5" name="Sign in" />
+          </Link>
         </div>
       </Container>
     </nav>

@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -36,6 +36,10 @@
   --color-ring: var(--ring);
 
   --radius: 0.625rem;
+}
+
+body {
+  background: #f4f6f8;
 }
 
 /* =========================

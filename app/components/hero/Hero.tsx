@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import hero from '@/public/hero/hero_1.png';
-import Action from '../buttons/Action';
-import ArrowIcon from '../icons/ArrowIcon';
+import Image from "next/image";
+import hero from "@/public/hero/hero_1.png";
+import Action from "../buttons/Action";
+import ArrowIcon from "../icons/ArrowIcon";
 
 export default function Hero() {
   return (
@@ -29,18 +29,20 @@ export default function Hero() {
         <div className="mt-5 sm:mt-8 flex justify-center">
           <Action
             iconPosition="right"
-            name="browse"
+            name="View All Products"
             title="Browse Products"
             icon={<ArrowIcon />}
             className="
-              bg-[#037FFF] hover:bg-[#0266d6]
-              text-white
-              px-5 sm:px-8
-              py-2.5 sm:py-4
-              rounded-full
-              text-sm sm:text-base
-              transition-all duration-200
-            "
+      bg-[#037FFF] hover:bg-[#0266d6]
+      text-white
+      h-14
+      pl-6 pr-2
+      rounded-full
+      text-sm sm:text-base
+      font-semibold
+      transition-all duration-200
+      flex items-center gap-4
+    "
           />
         </div>
       </div>

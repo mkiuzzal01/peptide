@@ -32,8 +32,8 @@ export default function ProductCard({
             name="View Details"
             title="View Details"
             className="
-              h-11
-              px-5
+              h-8
+              px-2
               rounded-full
               border border-gray-200
               bg-white
@@ -48,11 +48,11 @@ export default function ProductCard({
           <Action
             name="Add to Cart"
             title="Add to Cart"
-            icon={<Bag />}
+            icon={<Bag size="w-5 h-5" />}
             iconPosition="right"
             className="
-              h-11
-              px-5
+              h-8
+              px-2
               rounded-full
               bg-blue-600
               text-white

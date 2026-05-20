@@ -1,17 +1,22 @@
-import Footer from '../components/layouts/Footer';
-import Navbar from '../components/layouts/Navbar';
-import Top from '../components/layouts/Top';
+import Footer from "../components/layouts/Footer";
+import Navbar from "../components/layouts/Navbar";
+import Top from "../components/layouts/Top";
 
-export default function MainLayout({
-  children,
-}: {
+interface MainLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col bg-background">
       <Top />
-      <Navbar />
-      <div className="flex-1">{children}</div>
+
+      <header className="sticky top-0 z-50">
+        <Navbar />
+      </header>
+
+      <section className="flex-1">{children}</section>
+
       <Footer />
     </main>
   );

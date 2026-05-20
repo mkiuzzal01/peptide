@@ -45,7 +45,7 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
-          <button className="cursor-pointer bg-gray-200 p-2 rounded-full">
+          <button>
             <Bag />
           </button>
 

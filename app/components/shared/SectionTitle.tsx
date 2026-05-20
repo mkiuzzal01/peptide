@@ -3,6 +3,7 @@ interface Props {
   icon?: React.ReactNode;
   description?: string;
   align?: "left" | "right";
+  titleSize?: "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
 export default function SectionTitle({
@@ -10,13 +11,18 @@ export default function SectionTitle({
   icon,
   description,
   align = "right",
+  titleSize = "md",
 }: Props) {
   return (
     <div>
       <div className="flex justify-between items-center gap-2">
         {align === "left" && icon}
 
-        <h2 className="text-xl font-bold text-gray-900">{title}</h2>
+        <h2
+          className={`font-bold text-gray-900 ${titleSize === "sm" ? "text-lg" : titleSize === "lg" ? "text-2xl" : titleSize === "xl" ? "text-3xl" : titleSize === "2xl" ? "text-4xl" : "text-xl"}`}
+        >
+          {title}
+        </h2>
 
         {align === "right" && icon}
       </div>

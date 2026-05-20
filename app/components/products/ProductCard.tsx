@@ -22,10 +22,10 @@ export default function ProductCard({
         {/* Product Info */}
         <div className="text-center space-y-2">
           <p className="text-sm font-medium tracking-wide text-gray-400 uppercase">
-            CAS: {cas}
+            CAS #: {cas}
           </p>
           <h3 className="text-xl font-bold text-gray-900">{name}</h3>
-          <p className="text-2xl font-bold text-blue-600">{price}</p>
+          <p className="font-normal"> From {price}</p>
         </div>
         <div className="mt-6 flex items-center justify-center gap-3">
           <Action

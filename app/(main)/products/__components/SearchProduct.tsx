@@ -1,14 +1,12 @@
 "use client";
-
-import { Search, SlidersHorizontal } from "lucide-react";
-
+import { Search } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function SearchProduct() {
   return (
-    <div className="w-full max-w-md rounded-3xl border border-border bg-background p-6 shadow-sm">
+    <div className="w-full bg-white max-w-md rounded-3xl border border-border bg-background p-6 shadow-sm">
       {/* Search */}
       <div className="space-y-2">
         <Label htmlFor="search">Search Products</Label>
@@ -43,7 +41,7 @@ export default function SearchProduct() {
       </div>
 
       {/* Sorting */}
-      <div className="mt-6 space-y-4">
+      <div className="mt-6 space-y-4-">
         <Label>Sort By</Label>
 
         <div className="space-y-3">

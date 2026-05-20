@@ -28,7 +28,7 @@ const header = [
 export default function Header() {
   return (
     <section className="w-full py-10">
-      <Container>
+      <Container className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {header.map((item, index) => (
             <HeaderCard
@@ -40,7 +40,7 @@ export default function Header() {
             />
           ))}
         </div>
-        <div className="py-10">
+        <div className="p-4 bg-white rounded-lg">
           <h1 className="text-xl font-bold text-gray-900">Research Use Only</h1>
           <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
             All products are intended solely for laboratory research and are not

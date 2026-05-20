@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import Action from '../buttons/Action';
-import Bag from '../icons/Bag';
-import Logo from '../icons/Logo';
-import Container from '../shared/Container';
-import { navigationLinks } from './navLinks';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Action from "../buttons/Action";
+import Bag from "../icons/Bag";
+import Logo from "../icons/Logo";
+import Container from "../shared/Container";
+import { navigationLinks } from "./navLinks";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -33,8 +33,8 @@ export default function Navbar() {
                 href={item.href}
                 className={`text-sm font-medium transition-colors ${
                   isActive
-                    ? 'text-[#037FFF]'
-                    : 'text-[#637381] hover:text-[#037FFF]'
+                    ? "text-[#037FFF]"
+                    : "text-[#637381] hover:text-[#037FFF]"
                 }`}
               >
                 {item.title}
@@ -45,7 +45,7 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
-          <button className="cursor-pointer">
+          <button className="cursor-pointer bg-gray-200 p-2 rounded-full">
             <Bag />
           </button>
 

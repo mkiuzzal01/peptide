@@ -1,14 +1,14 @@
-import Link from 'next/link';
-import Facebook from '../icons/Facebook';
-import LinkedIn from '../icons/LinkedIn';
-import Logo from '../icons/Logo';
-import Twitter from '../icons/Twitter';
-import Container from '../shared/Container';
-import { footerLinks } from './navLinks';
+import Link from "next/link";
+import Facebook from "../icons/Facebook";
+import LinkedIn from "../icons/LinkedIn";
+import Logo from "../icons/Logo";
+import Twitter from "../icons/Twitter";
+import Container from "../shared/Container";
+import { footerLinks } from "./navLinks";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#F8F9FC] pt-16 pb-6 border-t">
+    <footer className="bg-white pt-16 pb-6">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* LEFT */}

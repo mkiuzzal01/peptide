@@ -87,7 +87,7 @@ const coaList = [
 export default function Page() {
   return (
     <Container>
-      <div className="py-4">
+      <div className="py-10">
         <SectionTitle
           titleSize="2xl"
           title="Certificate of Analysis"

@@ -1,5 +1,13 @@
-import Container from "@/app/components/shared/Container";
+import WholeSele from "@/app/components/hero/WholeSele";
+import HoleSaleHeader from "./__components/HoleSaleHeader";
+import OrderProcess from "@/app/components/order/OrderProcess";
 
 export default function page() {
-  return <Container>page</Container>;
+  return (
+    <>
+      <WholeSele />
+      <HoleSaleHeader />
+      <OrderProcess />
+    </>
+  );
 }

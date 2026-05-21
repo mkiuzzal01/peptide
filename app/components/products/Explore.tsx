@@ -4,6 +4,7 @@ import Container from "../shared/Container";
 import SectionTitle from "../shared/SectionTitle";
 import image from "@/public/products/products.png";
 import ProductCard from "./ProductCard";
+import Link from "next/link";
 
 const products = [
   {
@@ -70,18 +71,19 @@ export default function Explore() {
       <SectionTitle
         title="Explore our products"
         icon={
-          <Action
-            iconPosition="right"
-            name={"See All Products"}
-            title="Browse Products"
-            icon={
-              <ArrowIcon
-                bgColor="bg-blue-600"
-                size="w-6 h-6"
-                iconColor="white"
-              />
-            }
-            className="
+          <Link href="/products">
+            <Action
+              iconPosition="right"
+              name={"See All Products"}
+              title="Browse Products"
+              icon={
+                <ArrowIcon
+                  bgColor="bg-blue-600"
+                  size="w-6 h-6"
+                  iconColor="white"
+                />
+              }
+              className="
                       bg-[#FFFFF] border border-blue-600
                       text-blue-600
                       h-10
@@ -92,7 +94,8 @@ export default function Explore() {
                       transition-all duration-200
                       flex items-center gap-4
                     "
-          />
+            />
+          </Link>
         }
       />
 

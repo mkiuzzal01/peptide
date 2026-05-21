@@ -25,37 +25,12 @@ const blogData = {
       ],
       reference: "Yates et al., 2009",
     },
-    {
-      heading: "Common Approaches in Peptide MS",
-      content: "Several methods are frequently applied in peptide analysis:",
-      methods: [
-        {
-          name: "MALDI-TOF",
-          fullForm:
-            "Matrix-Assisted Laser Desorption/Ionization–Time of Flight",
-          description: "Often used for rapid mass determination of peptides",
-        },
-        {
-          name: "ESI",
-          fullForm: "Electrospray Ionization",
-          description:
-            "Allows analysis of peptides in solution, suitable for coupling with liquid chromatography",
-        },
-        {
-          name: "LC-MS/MS",
-          fullForm: "Liquid Chromatography–Tandem Mass Spectrometry",
-          description:
-            "Combines separation with fragmentation for detailed sequencing and structural analysis",
-        },
-      ],
-      reference: "Domon & Aebersold, 2006",
-    },
   ],
 };
 
 export default function BlogDetails() {
   return (
-    <Container className="py-4">
+    <div className="py-4">
       <div className="space-y-6 text-center">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900 leading-tight">
           {blogData.title}
@@ -113,30 +88,6 @@ export default function BlogDetails() {
                 </div>
               )}
 
-              {/* METHODS */}
-              {section.methods && (
-                <div className="grid gap-4">
-                  {section.methods.map((method, i) => (
-                    <div
-                      key={i}
-                      className="border border-gray-100 rounded-2xl p-5 hover:border-blue-200 transition-colors"
-                    >
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {method.name}
-                      </h3>
-
-                      <p className="text-sm text-blue-600 font-medium mb-3">
-                        {method.fullForm}
-                      </p>
-
-                      <p className="text-gray-600 leading-7">
-                        {method.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
               {/* REFERENCE */}
               <div className="pt-2">
                 <p className="text-sm italic text-gray-500">
@@ -147,6 +98,6 @@ export default function BlogDetails() {
           ))}
         </div>
       </article>
-    </Container>
+    </div>
   );
 }

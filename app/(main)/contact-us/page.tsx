@@ -9,9 +9,8 @@ export default function page() {
     <Container className="py-5">
       <div className="py-4">
         <SectionTitle
-          titleSize="sm"
           title={
-            <p>
+            <p className="md:text-2xl text-xl">
               Got a question or need <br /> support? Send us a message
             </p>
           }

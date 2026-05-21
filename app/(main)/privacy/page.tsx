@@ -104,7 +104,7 @@ export default function Page() {
   return (
     <section className="py-12 lg:py-16">
       <Container>
-        <div className="max-w-5xl mx-auto">
+        <>
           {/* HERO */}
           <SectionTitle
             titleSize="2xl"
@@ -188,7 +188,7 @@ export default function Page() {
               </div>
             </section>
           </div>
-        </div>
+        </>
       </Container>
     </section>
   );

@@ -42,10 +42,7 @@ export default function OrderProcess() {
       <Container>
         {/* HEADER */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
-          <SectionTitle
-            title="Order Process"
-            description="Our streamlined ordering process ensures fast communication, transparent pricing, and reliable fulfillment."
-          />
+          <SectionTitle title="Order Process" />
 
           {/* CTA */}
           <Link href="/contact">

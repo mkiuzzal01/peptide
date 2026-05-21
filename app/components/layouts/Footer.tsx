@@ -8,7 +8,7 @@ import { footerLinks } from "./navLinks";
 
 export default function Footer() {
   return (
-    <footer className="bg-white pt-16 pb-6">
+    <footer className="bg-white py-16">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* LEFT */}

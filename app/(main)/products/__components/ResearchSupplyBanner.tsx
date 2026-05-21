@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function ResearchSupplyBanner() {
   return (
-    <div className="flex bg-white justify-between items-center border rounded-2xl my-4 p-4">
+    <div className="flex bg-white justify-between items-center border rounded-2xl my-4 p-8">
       <div className="space-y-4">
         <h1 className="text text-2xl">Need Bulk Research Supply?</h1>
         <p>

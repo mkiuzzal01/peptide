@@ -8,12 +8,12 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="flex min-h-screen w-full flex-col">
+    <main className="flex min-h-screen w-full flex-col justify-between">
       <header>
         <Top />
         <Navbar />
       </header>
-      <main className="flex-1">{children}</main>
+      <main>{children}</main>
       <Footer />
     </main>
   );

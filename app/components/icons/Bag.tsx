@@ -16,7 +16,7 @@ export default function Bag({
   return (
     <div
       className={cn(
-        "flex items-center justify-center rounded-full transition-all duration-300",
+        "flex items-center justify-center rounded-lg transition-all duration-300",
         bgColor,
         size,
         className,

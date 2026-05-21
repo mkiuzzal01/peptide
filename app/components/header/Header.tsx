@@ -9,18 +9,21 @@ const header = [
     title: "High-Purity Peptides",
     description: "Best Peptides for Research",
     buttonTitle: "Learn More",
+    href: "/blog",
     image: <Image alt="App Store" height={300} width={200} src={Object1} />,
   },
   {
     title: "High-Purity Peptides",
     description: "Best Peptides for Research",
     buttonTitle: "Learn More",
+    href: "/blog",
     image: <Image alt="App Store" height={300} width={200} src={MedicineBox} />,
   },
   {
     title: "High-Purity Peptides",
     description: "Best Peptides for Research",
     buttonTitle: "View COAs",
+    href: "/coa",
     image: <Image alt="App Store" height={300} width={200} src={MedicineBox} />,
   },
 ];
@@ -33,6 +36,7 @@ export default function Header() {
           {header.map((item, index) => (
             <HeaderCard
               key={index}
+              link={item.href}
               title={item.title}
               description={item.description}
               buttonTitle={item.buttonTitle}

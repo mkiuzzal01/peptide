@@ -2,6 +2,7 @@ import Image from "next/image";
 import hero from "@/public/hero/hero_1.png";
 import Action from "../buttons/Action";
 import ArrowIcon from "../icons/ArrowIcon";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -27,12 +28,13 @@ export default function Hero() {
 
         {/* Button */}
         <div className="mt-5 sm:mt-8 flex justify-center">
-          <Action
-            iconPosition="right"
-            name="View All Products"
-            title="Browse Products"
-            icon={<ArrowIcon />}
-            className="
+          <Link href={"/products"}>
+            <Action
+              iconPosition="right"
+              name="View All Products"
+              title="Browse Products"
+              icon={<ArrowIcon />}
+              className="
       bg-[#037FFF] hover:bg-[#0266d6]
       text-white
       h-14
@@ -43,7 +45,8 @@ export default function Hero() {
       transition-all duration-200
       flex items-center gap-4
     "
-          />
+            />
+          </Link>
         </div>
       </div>
     </section>

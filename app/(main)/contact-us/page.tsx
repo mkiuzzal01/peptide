@@ -9,7 +9,7 @@ export default function page() {
     <Container className="py-5">
       <div className="py-4">
         <SectionTitle
-          titleSize="2xl"
+          titleSize="sm"
           title={
             <p>
               Got a question or need <br /> support? Send us a message
@@ -17,12 +17,12 @@ export default function page() {
           }
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex-1">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="md:w-3/4">
           <Contact />
         </div>
 
-        <div className="w-full">
+        <div className="flex-1">
           <Info />
         </div>
       </div>

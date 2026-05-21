@@ -7,6 +7,7 @@ import image_1 from "@/public/process/STEP 1 Card.png";
 import image_2 from "@/public/process/STEP 2 Card.png";
 import image_3 from "@/public/process/STEP 3 Card .png";
 import ProcessCard from "./ProcessCard";
+import Link from "next/link";
 
 const processSteps = [
   {
@@ -38,17 +39,18 @@ export default function OurProcess() {
       <SectionTitle
         title="Our Process"
         icon={
-          <Action
-            iconPosition="right"
-            name="Browse Products"
-            icon={
-              <ArrowIcon
-                bgColor="bg-blue-600"
-                size="w-6 h-6"
-                iconColor="white"
-              />
-            }
-            className="
+          <Link href={"/products"}>
+            <Action
+              iconPosition="right"
+              name="Browse Products"
+              icon={
+                <ArrowIcon
+                  bgColor="bg-blue-600"
+                  size="w-6 h-6"
+                  iconColor="white"
+                />
+              }
+              className="
               bg-white border border-blue-600
               text-blue-600
               h-10
@@ -59,7 +61,8 @@ export default function OurProcess() {
               transition-all duration-200
               flex items-center gap-4
             "
-          />
+            />
+          </Link>
         }
       />
 

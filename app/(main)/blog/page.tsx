@@ -4,6 +4,7 @@ import blogImage1 from "@/public/blog/Frame 2147228873.png";
 import blogImage2 from "@/public/blog/Blog Card 1.png";
 import BlogCard from "./__components/BlogCard";
 import FAQ from "@/app/components/FAQ/FAQ";
+import Link from "next/link";
 
 interface Blog {
   id: number;
@@ -76,13 +77,17 @@ export default function page() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-8">
           {blogs.map((blog) => (
-            <div key={blog.id} className={blog.id === 1 ? "lg:col-span-3" : ""}>
+            <Link
+              href={`/blog/${blog.id}`}
+              key={blog.id}
+              className={blog.id === 1 ? "lg:col-span-3" : ""}
+            >
               <BlogCard
                 title={blog.title}
                 image={blog.image}
                 description={blog.description}
               />
-            </div>
+            </Link>
           ))}
         </div>
 

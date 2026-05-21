@@ -1,6 +1,7 @@
 import Container from "../shared/Container";
 import Action from "../buttons/Action";
 import ArrowIcon from "../icons/ArrowIcon";
+import Link from "next/link";
 
 interface Props {
   buttonTitle: string;
@@ -15,6 +16,7 @@ export default function HeaderCard({
   title,
   description,
   buttonTitle,
+  link,
 }: Props) {
   return (
     <Container>
@@ -28,12 +30,13 @@ export default function HeaderCard({
             {description}
           </p>
 
-          <Action
-            iconPosition="right"
-            name={buttonTitle}
-            title="Browse Products"
-            icon={<ArrowIcon bgColor="bg-blue-600" iconColor="white" />}
-            className="
+          <Link href={link!}>
+            <Action
+              iconPosition="right"
+              name={buttonTitle}
+              title="Browse Products"
+              icon={<ArrowIcon bgColor="bg-blue-600" iconColor="white" />}
+              className="
               bg-[#FFFFF] border border-blue-600
               text-blue-600
               h-14
@@ -44,7 +47,8 @@ export default function HeaderCard({
               transition-all duration-200
               flex items-center gap-4
             "
-          />
+            />
+          </Link>
         </div>
 
         {image && (

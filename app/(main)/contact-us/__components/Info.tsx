@@ -31,19 +31,19 @@ export default function Info() {
               className="bg-white rounded-lg flex items-start gap-4 p-3"
             >
               {/* Icon */}
-              <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
+              <div className="rounded-full p-2">
                 <Icon size={18} />
               </div>
 
               {/* Content */}
               <div>
-                <p className="text-xs uppercase tracking-wide text-gray-400">
+                <p className="text-sm  tracking-wide text-black">
                   {info.title}
                 </p>
-                <p className="text-sm font-medium text-gray-800">
+                <p className="text-sm font-medium text-gray-500">
                   {info.value}
                 </p>
-                <p className="text-sm font-medium text-gray-800">
+                <p className="text-sm font-medium text-gray-500">
                   {info.value}
                 </p>
               </div>

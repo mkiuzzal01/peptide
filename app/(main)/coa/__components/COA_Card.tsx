@@ -26,7 +26,7 @@ export default function COA_Card({
   const visibleCerts = showAll ? certificates : certificates.slice(0, 3);
 
   return (
-    <div className="bg-white border rounded-xl p-4 shadow-sm">
+    <div className="bg-white border rounded-xl p-6 shadow-sm">
       {/* Tabs */}
       <div className="flex gap-2 mb-4">
         {tabs.map((tab) => (

@@ -2,6 +2,7 @@ import Action from "@/app/components/buttons/Action";
 import Bag from "@/app/components/icons/Bag";
 import image from "@/public/header/medicine_box.png";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ResearchSupplyBanner() {
   return (
@@ -12,12 +13,13 @@ export default function ResearchSupplyBanner() {
           Partner with a trusted supplier offering scalable wholesale solutions,
           verified products, and fast order processing.
         </p>
-        <Action
-          name="Contact US"
-          title="Add to Cart"
-          icon={<Bag size="w-5 h-5" />}
-          iconPosition="right"
-          className="
+        <Link href={"/contact-us"}>
+          <Action
+            name="Contact US"
+            title="Add to Cart"
+            icon={<Bag size="w-5 h-5" />}
+            iconPosition="right"
+            className="
                   h-8
                   px-2
                   rounded-full
@@ -29,7 +31,8 @@ export default function ResearchSupplyBanner() {
                   flex items-center justify-center gap-2
                   shadow-sm
                 "
-        />
+          />
+        </Link>
       </div>
       <div>
         <Image src={image} alt="Research Supply" className="w-full h-auto" />

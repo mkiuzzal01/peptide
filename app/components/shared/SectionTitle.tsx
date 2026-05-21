@@ -1,5 +1,5 @@
 interface Props {
-  title: string;
+  title: any;
   icon?: React.ReactNode;
   description?: string;
   align?: "left" | "right";

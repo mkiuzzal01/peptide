@@ -1,0 +1,56 @@
+import { Mail, Phone, MapPin } from "lucide-react";
+
+const infos = [
+  {
+    title: "Email",
+    value: "support@okazzion.com",
+    icon: Mail,
+  },
+  {
+    title: "Phone",
+    value: "+1 (555) 123-4567",
+    icon: Phone,
+  },
+  {
+    title: "Address",
+    value: "123 Main St, Anytown, USA",
+    icon: MapPin,
+  },
+];
+
+export default function Info() {
+  return (
+    <div>
+      <div className="space-y-6">
+        {infos.map((info) => {
+          const Icon = info.icon;
+
+          return (
+            <div
+              key={info.title}
+              className="bg-white rounded-lg flex items-start gap-4 p-3"
+            >
+              {/* Icon */}
+              <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
+                <Icon size={18} />
+              </div>
+
+              {/* Content */}
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-400">
+                  {info.title}
+                </p>
+                <p className="text-sm font-medium text-gray-800">
+                  {info.value}
+                </p>
+                <p className="text-sm font-medium text-gray-800">
+                  {info.value}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

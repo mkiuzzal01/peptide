@@ -1,14 +1,14 @@
-'use client';
-import { FieldValues } from 'react-hook-form';
-import Container from '../shared/Container';
-import AppForm from './AppForm';
-import TextInput from './input-fields/TextInput';
-import { Lock, Mail } from 'lucide-react';
-import Image from 'next/image';
-import SocialLogin from '../utils/SocialLogin';
-import SubmitButton from '../buttons/SubmitButton';
-import logo from '@/public/auth/sign-in.jpg';
-import Link from 'next/link';
+"use client";
+import { FieldValues } from "react-hook-form";
+import Container from "../shared/Container";
+import AppForm from "./AppForm";
+import TextInput from "./input-fields/TextInput";
+import { Lock, Mail } from "lucide-react";
+import Image from "next/image";
+import SocialLogin from "../utils/SocialLogin";
+import SubmitButton from "../buttons/SubmitButton";
+import logo from "@/public/auth/sign-in.jpg";
+import Link from "next/link";
 
 export default function Signin() {
   const onSubmit = async (values: FieldValues, reset: () => void) => {
@@ -57,9 +57,9 @@ export default function Signin() {
             <AppForm
               onSubmit={onSubmit}
               defaultValues={{
-                name: '',
-                email: '',
-                password: '',
+                name: "",
+                email: "",
+                password: "",
               }}
             >
               <div className="space-y-5">
@@ -85,7 +85,7 @@ export default function Signin() {
                     href="/forgot"
                     className="text-xs text-gray-700 hover:text-primary transition-colors"
                   >
-                    Forgot Password?{' '}
+                    Forgot Password?{" "}
                   </Link>
                 </div>
                 {/* SUBMIT */}
@@ -94,7 +94,7 @@ export default function Signin() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-700 text-center">
-                    Don&apos;t have an account?{' '}
+                    Don&apos;t have an account?{" "}
                     <Link
                       href="/sign-up"
                       className="text-primary font-semibold"

@@ -1,8 +1,6 @@
 import image from "@/public/products/products.png";
 import Container from "../shared/Container";
 import SectionTitle from "../shared/SectionTitle";
-import Action from "../buttons/Action";
-import ArrowIcon from "../icons/ArrowIcon";
 import ProductCard from "./ProductCard";
 
 const products = [
@@ -45,6 +43,7 @@ export default function Recent() {
         {products.map((product) => (
           <div key={product.id}>
             <ProductCard
+              id={product.id}
               cas={product.cas}
               name={product.name}
               price={product.price}

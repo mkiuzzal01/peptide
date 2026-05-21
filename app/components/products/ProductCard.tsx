@@ -1,8 +1,10 @@
 import Image, { StaticImageData } from "next/image";
 import Action from "../buttons/Action";
 import Bag from "../icons/Bag";
+import Link from "next/link";
 
 interface ProductCardProps {
+  id: number;
   cas: string;
   name: string;
   price: string;
@@ -10,6 +12,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({
+  id,
   cas,
   name,
   price,
@@ -28,10 +31,11 @@ export default function ProductCard({
           <p className="font-normal"> From {price}</p>
         </div>
         <div className="mt-6 flex items-center justify-center gap-3">
-          <Action
-            name="View Details"
-            title="View Details"
-            className="
+          <Link href={`/products/${id}`}>
+            <Action
+              name="View Details"
+              title="View Details"
+              className="
               h-8
               px-2
               rounded-full
@@ -43,7 +47,8 @@ export default function ProductCard({
               transition-all duration-200
               flex items-center justify-center
             "
-          />
+            />
+          </Link>
 
           <Action
             name="Add to Cart"

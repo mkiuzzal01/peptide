@@ -13,7 +13,7 @@ export default function ResearchSupplyBanner() {
           verified products, and fast order processing.
         </p>
         <Action
-          name="Add to Cart"
+          name="Contact US"
           title="Add to Cart"
           icon={<Bag size="w-5 h-5" />}
           iconPosition="right"

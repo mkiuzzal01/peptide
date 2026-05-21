@@ -37,6 +37,7 @@ export default function page() {
             {products.map((product) => (
               <ProductCard
                 key={product.id}
+                id={product.id}
                 cas={product.cas}
                 name={product.name}
                 price={product.price}

@@ -1,9 +1,9 @@
-import Action from "../buttons/Action";
-import ArrowIcon from "../icons/ArrowIcon";
-import Container from "../shared/Container";
-import SectionTitle from "../shared/SectionTitle";
 import image from "@/public/products/products.png";
-import ProductCard from "./ProductCard";
+import Container from "@/app/components/shared/Container";
+import SectionTitle from "@/app/components/shared/SectionTitle";
+import ProductCard from "@/app/components/products/ProductCard";
+import Action from "@/app/components/buttons/Action";
+import ArrowIcon from "@/app/components/icons/ArrowIcon";
 
 const products = [
   {
@@ -34,41 +34,13 @@ const products = [
     price: "$90",
     image: image,
   },
-  {
-    id: 5,
-    cas: "67-56-1",
-    name: "Methanol",
-    price: "$110",
-    image: image,
-  },
-  {
-    id: 6,
-    cas: "73-78-9",
-    name: "Lidocaine",
-    price: "$140",
-    image: image,
-  },
-  {
-    id: 7,
-    cas: "7440-44-0",
-    name: "Activated Carbon",
-    price: "$60",
-    image: image,
-  },
-  {
-    id: 8,
-    cas: "7664-93-9",
-    name: "Sulfuric Acid",
-    price: "$95",
-    image: image,
-  },
 ];
 
-export default function Explore() {
+export default function Recommanded() {
   return (
     <Container>
       <SectionTitle
-        title="Explore our products"
+        title="Recommanded Products"
         icon={
           <Action
             iconPosition="right"
@@ -81,22 +53,12 @@ export default function Explore() {
                 iconColor="white"
               />
             }
-            className="
-                      bg-[#FFFFF] border border-blue-600
-                      text-blue-600
-                      h-10
-                      pl-6 pr-2
-                      rounded-full
-                      text-sm sm:text-base  
-                      font-semibold
-                      transition-all duration-200
-                      flex items-center gap-4
-                    "
+            className="bg-[#FFFFF] border border-blue-600 text-blue-600 h-10 pl-6 pr-2 rounded-full text-sm sm:text-base  font-semibold transition-all duration-200 flex items-center gap-4"
           />
         }
       />
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-4 py-4">
+      <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
         {products.map((product) => (
           <div key={product.id}>
             <ProductCard

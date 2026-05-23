@@ -15,7 +15,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Pixelkin",
+  title: "Peptide",
   description: "For your digital solutions",
 };
 

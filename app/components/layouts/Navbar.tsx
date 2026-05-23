@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Action from "../buttons/Action";
@@ -12,7 +11,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-0 z-50 bg-white">
+    <nav className="bg-white">
       <Container className="flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/">
@@ -45,9 +44,9 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
-          <button>
+          <Link href={"/cart"}>
             <Bag bgColor={"bg-gray-200"} className="rounded-full" />
-          </button>
+          </Link>
 
           <Link href={"/sign-in"}>
             <Action className="rounded-full px-4 py-5" name="Sign in" />

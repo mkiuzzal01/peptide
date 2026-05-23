@@ -1,3 +1,4 @@
+import ReduxProvider from "@/redux/provider";
 import Footer from "../components/layouts/Footer";
 import Navbar from "../components/layouts/Navbar";
 import Top from "../components/layouts/Top";
@@ -8,15 +9,15 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="flex flex-col min-h-screen justify-between">
+    <div className="flex flex-col min-h-screen justify-between">
       <header>
         <Top />
-        <nav>
-          <Navbar />
-        </nav>
+        <Navbar />
       </header>
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <ReduxProvider>{children}</ReduxProvider>
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }

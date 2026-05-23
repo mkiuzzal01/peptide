@@ -1,5 +1,6 @@
 import Container from "@/app/components/shared/Container";
 import SectionTitle from "@/app/components/shared/SectionTitle";
+import ProductList from "./__components/ProductList";
 
 export default function Page() {
   return (
@@ -12,7 +13,7 @@ export default function Page() {
         />
       </div>
 
-      <div></div>
+      <ProductList />
     </Container>
   );
 }

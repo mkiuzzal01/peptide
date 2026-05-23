@@ -1,7 +1,12 @@
+"use client";
+
 import Image, { StaticImageData } from "next/image";
 import Action from "../buttons/Action";
 import Bag from "../icons/Bag";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart } from "@/redux/features/cart/addToCart.slice";
+import { toast } from "react-toastify";
 
 interface ProductCardProps {
   id: number;
@@ -18,6 +23,36 @@ export default function ProductCard({
   price,
   image,
 }: ProductCardProps) {
+  const dispatch = useAppDispatch();
+
+  const { products } = useAppSelector((state) => state.addToCart);
+
+  const handleAddToCart = () => {
+    const existingProduct = products.find(
+      (product) => product.id === String(id),
+    );
+
+    if (existingProduct) {
+      toast.info("Product already added to cart");
+
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        id: String(id),
+        name,
+        price,
+        image,
+        quantity: 1,
+        weight: "1kg",
+        packSize: "1kg",
+      }),
+    );
+
+    toast.success("Product added to cart");
+  };
+
   return (
     <div className="group bg-white rounded-3xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       {/* Content */}
@@ -27,30 +62,34 @@ export default function ProductCard({
           <p className="text-sm font-medium tracking-wide text-gray-400 uppercase">
             CAS #: {cas}
           </p>
+
           <h3 className="text-xl font-bold text-gray-900">{name}</h3>
-          <p className="font-normal"> From {price}</p>
+
+          <p className="font-normal">From {price}</p>
         </div>
+
         <div className="mt-6 flex items-center justify-center gap-3">
           <Link href={`/products/${id}`}>
             <Action
               name="View Details"
               title="View Details"
               className="
-              h-8
-              px-2
-              rounded-full
-              border border-gray-200
-              bg-white
-              text-gray-700
-              text-sm font-semibold
-              hover:bg-gray-100
-              transition-all duration-200
-              flex items-center justify-center
-            "
+                h-8
+                px-2
+                rounded-full
+                border border-gray-200
+                bg-white
+                text-gray-700
+                text-sm font-semibold
+                hover:bg-gray-100
+                transition-all duration-200
+                flex items-center justify-center
+              "
             />
           </Link>
 
           <Action
+            onClick={handleAddToCart}
             name="Add to Cart"
             title="Add to Cart"
             icon={<Bag size="w-5 h-5" />}
@@ -70,12 +109,22 @@ export default function ProductCard({
           />
         </div>
       </div>
+
       {/* Product Image */}
       <div className="flex items-center justify-center p-3">
         <Image
           src={image}
           alt={name}
-          className="w-full h-32 object-contain transition-transform duration-300 group-hover:scale-105"
+          width={300}
+          height={300}
+          className="
+            w-full
+            h-32
+            object-contain
+            transition-transform
+            duration-300
+            group-hover:scale-105
+          "
         />
       </div>
     </div>

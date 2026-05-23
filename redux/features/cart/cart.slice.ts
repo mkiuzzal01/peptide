@@ -42,8 +42,8 @@ const initialState: IInitialState = {
   products: loadCartFromLocalStorage(),
 };
 
-const addToCartSlice = createSlice({
-  name: "addToCart",
+const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<ICartProduct>) => {
@@ -62,6 +62,6 @@ const addToCartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeCartItem } = addToCartSlice.actions;
+export const { addToCart, removeCartItem } = cartSlice.actions;
 
-export default addToCartSlice.reducer;
+export default cartSlice.reducer;

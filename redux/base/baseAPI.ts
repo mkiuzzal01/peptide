@@ -9,14 +9,14 @@ import {
   type FetchArgs,
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-import { logout, setUser } from "../features/user/user.slice";
 import { tagTypes } from "./tagTypes";
+import { logout, setUser } from "../features/auth/auth.slice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_API_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).user?.token;
+    const token = (getState() as RootState).auth.token;
     if (token) {
       headers.set("authorization", token);
     }
@@ -45,15 +45,16 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
       if (refreshResponse.ok && refreshData?.data?.accessToken) {
         // Get current user from state
-        const currentUser = (api.getState() as RootState).user.user;
+        const currentUser = (api.getState() as RootState).auth.user;
 
         // Update Redux store with new token
         if (currentUser) {
           api.dispatch(
             setUser({
               user: {
-                id: currentUser?.userId || "",
+                id: currentUser?.id || "",
                 email: currentUser?.email || "",
+                time_zone: currentUser?.time_zone || "",
                 role: currentUser?.role || "",
                 name: currentUser?.name || "",
                 avatar: currentUser?.avatar || "",

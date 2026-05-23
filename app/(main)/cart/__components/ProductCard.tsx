@@ -4,7 +4,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useAppDispatch } from "@/redux/hooks";
-import { removeCartItem } from "@/redux/features/cart/addToCart.slice";
+import { removeCartItem } from "@/redux/features/cart/cart.slice";
 
 interface Props {
   id: string;

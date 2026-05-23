@@ -1,16 +1,41 @@
-'use client';
-import Container from '../shared/Container';
-import { ArrowLeft, Lock } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import AppForm from './AppForm';
-import SubmitButton from '../buttons/SubmitButton';
-import { FieldValues } from 'react-hook-form';
-import TextInput from './input-fields/TextInput';
-import OtpInput from './input-fields/OtpInput';
+"use client";
+import Container from "../shared/Container";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import AppForm from "./AppForm";
+import SubmitButton from "../buttons/SubmitButton";
+import { FieldValues } from "react-hook-form";
+import OtpInput from "./input-fields/OtpInput";
+import { toast } from "react-toastify";
+import { useVerifyOTPMutation } from "@/redux/features/auth/auth.api";
 
-export default function Verify() {
+interface Props {
+  email: string;
+}
+
+export default function Verify({ email }: Props) {
   const router = useRouter();
-  const onSubmit = async (values: FieldValues, reset: () => void) => {};
+  const [verifyOTP, { isLoading }] = useVerifyOTPMutation();
+
+  const onSubmit = async (values: FieldValues, reset: () => void) => {
+    try {
+      const res = await verifyOTP({
+        email: email,
+        otp: values?.otp,
+      }).unwrap();
+
+      if (res?.message) {
+        toast.info(res?.message);
+        reset();
+        router.push(`/sign-in`);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
   return (
     <Container>
       <div className="flex items-center justify-center min-h-screen px-4">
@@ -19,7 +44,7 @@ export default function Verify() {
             <button
               className="flex items-center gap-2 text-xs cursor-pointer  font-semibold text-gray-700"
               onClick={() => {
-                router.push('/sign-in');
+                router.push("/sign-in");
               }}
             >
               <ArrowLeft size={18} />
@@ -31,7 +56,7 @@ export default function Verify() {
             {/* HEADER */}
             <div className="flex justify-center items-center flex-col gap-1 mb-8">
               <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-2">
-                Please check your email!{' '}
+                Please check your email!{" "}
               </h2>
               <p className="text-xs md:text-sm text-muted-foreground">
                 We&apos;ve emailed a 6-digit confirmation code to acb@domain,
@@ -48,19 +73,20 @@ export default function Verify() {
                 {/* SUBMIT */}
                 <div className="pt-2">
                   <SubmitButton
+                    disabled={isLoading}
                     text="Verify"
                     className="h-12 w-full rounded-full"
                   />
                 </div>
                 <div className="flex justify-center items-center gap-1">
                   <p className="text-xs text-gray-700">
-                    Didn&apos;t receive a code?{' '}
+                    Didn&apos;t receive a code?{" "}
                   </p>
                   <button
                     type="button"
                     className="text-xs font-semibold text-primary cursor-pointer"
                     onClick={() => {
-                      console.log(' clicked');
+                      console.log(" clicked");
                     }}
                   >
                     Resend code?

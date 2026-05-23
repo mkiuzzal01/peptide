@@ -5,7 +5,7 @@ import Action from "../buttons/Action";
 import Bag from "../icons/Bag";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addToCart } from "@/redux/features/cart/addToCart.slice";
+import { addToCart } from "@/redux/features/cart/cart.slice";
 import { toast } from "react-toastify";
 
 interface ProductCardProps {
@@ -25,7 +25,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   const dispatch = useAppDispatch();
 
-  const { products } = useAppSelector((state) => state.addToCart);
+  const { products } = useAppSelector((state) => state.cart);
 
   const handleAddToCart = () => {
     const existingProduct = products.find(

@@ -1,5 +1,12 @@
-import Verify from '@/app/components/form/Verify';
+import Verify from "@/app/components/form/Verify";
 
-export default function page() {
-  return <Verify />;
+interface Props {
+  searchParams: {
+    email: string;
+  };
+}
+
+export default async function page({ searchParams }: Props) {
+  const { email } = await searchParams;
+  return <Verify email={email} />;
 }

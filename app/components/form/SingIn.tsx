@@ -9,11 +9,30 @@ import SocialLogin from "../utils/SocialLogin";
 import SubmitButton from "../buttons/SubmitButton";
 import logo from "@/public/auth/sign-in.jpg";
 import Link from "next/link";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function Signin() {
+  const router = useRouter();
+  const [login, { isLoading }] = useLoginMutation();
+
   const onSubmit = async (values: FieldValues, reset: () => void) => {
-    console.log(values);
-    reset();
+    try {
+      const res = await login(values).unwrap();
+
+      console.log("====================", res);
+
+      if (res?.message) {
+        toast.info(res?.message);
+        reset();
+        router.push("/");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error?.message);
+      }
+    }
   };
 
   return (
@@ -90,7 +109,11 @@ export default function Signin() {
                 </div>
                 {/* SUBMIT */}
                 <div className="pt-2">
-                  <SubmitButton text="Sign In" className="h-12 rounded-full" />
+                  <SubmitButton
+                    loading={isLoading}
+                    text="Sign In"
+                    className="h-12 rounded-full"
+                  />
                 </div>
                 <div>
                   <p className="text-xs text-gray-700 text-center">

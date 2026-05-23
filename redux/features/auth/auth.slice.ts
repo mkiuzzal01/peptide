@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IUser {
-  userId: string;
+  id: string;
   email: string;
+  time_zone: string;
   role: string;
   name: string;
-  avatar: string;
+  avatar?: string;
 }
 
 interface IInitState {
@@ -18,8 +19,8 @@ const initialState: IInitState = {
   token: null,
 };
 
-export const userSlice = createSlice({
-  name: "user",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     setUser: (state, action) => {
@@ -33,4 +34,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, logout } = userSlice.actions;
+export const { setUser, logout } = authSlice.actions;
+
+export default authSlice.reducer;

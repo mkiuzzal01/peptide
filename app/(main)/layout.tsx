@@ -1,4 +1,3 @@
-import ReduxProvider from "@/redux/provider";
 import Footer from "../components/layouts/Footer";
 import Navbar from "../components/layouts/Navbar";
 import Top from "../components/layouts/Top";
@@ -14,9 +13,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <Top />
         <Navbar />
       </header>
-      <main className="flex-1">
-        <ReduxProvider>{children}</ReduxProvider>
-      </main>
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

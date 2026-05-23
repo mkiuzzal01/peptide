@@ -7,7 +7,7 @@ import Image from "next/image";
 import ProductTabs from "./ProductTabs";
 import QuantityControl from "@/app/components/shared/QuantityControl";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addToCart } from "@/redux/features/cart/addToCart.slice";
+import { addToCart } from "@/redux/features/cart/cart.slice";
 import { toast } from "react-toastify";
 
 interface Props {

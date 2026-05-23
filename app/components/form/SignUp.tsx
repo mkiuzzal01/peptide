@@ -1,21 +1,37 @@
-'use client';
-
-import { FieldValues } from 'react-hook-form';
-import Container from '../shared/Container';
-import AppForm from './AppForm';
-import TextInput from './input-fields/TextInput';
-import { Lock, Mail, User } from 'lucide-react';
-import Image from 'next/image';
-import SocialLogin from '../utils/SocialLogin';
-import SubmitButton from '../buttons/SubmitButton';
-import logo from '@/public/auth/sign-in.jpg';
-import { Checkbox } from '@/components/ui/checkbox';
-import Link from 'next/link';
+"use client";
+import { FieldValues } from "react-hook-form";
+import Container from "../shared/Container";
+import AppForm from "./AppForm";
+import TextInput from "./input-fields/TextInput";
+import { Lock, Mail, User } from "lucide-react";
+import Image from "next/image";
+import SocialLogin from "../utils/SocialLogin";
+import SubmitButton from "../buttons/SubmitButton";
+import logo from "@/public/auth/sign-in.jpg";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+  const router = useRouter();
+  const [register, { isLoading }] = useRegisterMutation();
+
   const onSubmit = async (values: FieldValues, reset: () => void) => {
-    console.log(values);
-    reset();
+    try {
+      const res = await register(values).unwrap();
+
+      if (res?.message) {
+        toast.info(res?.message);
+        reset();
+        router.push(`/verify?email=${res?.data?.email}`);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   return (
@@ -59,9 +75,9 @@ export default function SignUp() {
             <AppForm
               onSubmit={onSubmit}
               defaultValues={{
-                name: '',
-                email: '',
-                password: '',
+                name: "",
+                email: "",
+                password: "",
               }}
             >
               <div className="space-y-5">
@@ -90,6 +106,15 @@ export default function SignUp() {
                   placeholder="Enter password"
                 />
 
+                <TextInput
+                  icon={<Lock size={18} />}
+                  label="Confirm Password"
+                  name="password_confirmation"
+                  type="password"
+                  className="h-12"
+                  placeholder="Enter confirm password"
+                />
+
                 <div className="flex items-center gap-2 py-2">
                   <Checkbox />
                   <label className="text-xs text-gray-700" htmlFor="terms">
@@ -98,10 +123,14 @@ export default function SignUp() {
                 </div>
 
                 {/* SUBMIT */}
-                <SubmitButton text="Sign Up" className="h-12 rounded-full" />
+                <SubmitButton
+                  text="Sign Up"
+                  className="h-12 rounded-full"
+                  loading={isLoading}
+                />
                 <div>
                   <p className="text-xs text-gray-700 text-center">
-                    Already have an account?{' '}
+                    Already have an account?{" "}
                     <Link
                       href="/sign-in"
                       className="text-primary font-semibold"

@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import OrderSummery from "./OrderSummery";
 
 export default function ProductList() {
-  const { products } = useAppSelector((state) => state.addToCart);
+  const { products } = useAppSelector((state) => state.cart);
 
   const totalPrice = products.reduce((acc, curr) => {
     const price = Number(curr.price) || 0;

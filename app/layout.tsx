@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Public_Sans, Poppins } from "next/font/google";
 import "./globals.css";
+import ReduxProvider from "@/redux/provider";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -29,7 +30,9 @@ export default function RootLayout({
       lang="en"
       className={`${publicSans.variable} ${poppins.className} h-full antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   );
 }

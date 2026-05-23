@@ -45,7 +45,11 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center gap-4">
           <Link href={"/cart"}>
-            <Bag bgColor={"bg-gray-200"} className="rounded-full" />
+            <Bag
+              size="w-10 h-10"
+              bgColor={"bg-gray-200"}
+              className="rounded-full"
+            />
           </Link>
 
           <Link href={"/sign-in"}>

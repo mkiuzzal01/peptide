@@ -68,7 +68,7 @@ export default function ProductCard({
 
           <h3 className="text-xl font-bold text-gray-900">{name}</h3>
 
-          <p className="font-normal">From {price}</p>
+          <p className="font-normal">From $ {price}</p>
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-3">

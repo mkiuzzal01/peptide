@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "../TApi";
 
-export const getProducts = () =>
-  api.get<any>(`/products`, {
+export const getProducts = (params: URLSearchParams) =>
+  api.get<any>(`/products?${params}`, {
     tags: ["product"],
     revalidate: 60,
   });

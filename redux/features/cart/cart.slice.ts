@@ -7,7 +7,7 @@ interface ICartProduct {
   quantity: number;
   image: string | any;
   weight?: string;
-  packSize?: string;
+  packSize?: string | null;
 }
 
 interface IInitialState {

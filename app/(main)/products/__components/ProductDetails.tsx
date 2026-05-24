@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Container from "@/app/components/shared/Container";
 import productImg1 from "@/public/products/image 32.png";
 import Image from "next/image";
@@ -14,34 +14,80 @@ interface Props {
   payload: any;
 }
 
-const productDetails = {
-  id: 1,
-  title: "BPC-157",
-  image: productImg1,
-  cas: "CAS #: 137525-51-0",
-  size: [5, 10, 15],
-  quantityOptions: ["Single Vial", "Pack of 10"],
-  price: 39,
-};
-
 export default function ProductDetails({ payload }: Props) {
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.cart);
 
-  const [selectedSize, setSelectedSize] = useState<number>(5);
-  const [selectedQuantityOption, setSelectedQuantityOption] =
-    useState<string>("Single Vial");
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedQuantityOption, setSelectedQuantityOption] = useState<
+    string | null
+  >(null);
   const [quantity, setQuantity] = useState<number>(1);
 
-  const handleIncrease = () => setQuantity((prev) => prev + 1);
+  // -----------------------------
+  // DERIVE SIZES FROM VARIANTS
+  // -----------------------------
+  const sizes = useMemo(() => {
+    const map = new Map<number, { id: number; size: string }>();
 
-  const handleDecrease = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
+    payload?.variants?.forEach((v: any) => {
+      if (!map.has(v.size_id)) {
+        map.set(v.size_id, {
+          id: v.size_id,
+          size: v.size,
+        });
+      }
+    });
 
+    return Array.from(map.values());
+  }, [payload?.variants]);
+
+  // -----------------------------
+  // DERIVE QUANTITIES FROM VARIANTS
+  // -----------------------------
+  const quantityOptions = useMemo(() => {
+    const map = new Map<number, string>();
+
+    payload?.variants?.forEach((v: any) => {
+      if (!map.has(v.quantity_id)) {
+        map.set(v.quantity_id, v.quantity);
+      }
+    });
+
+    return Array.from(map.values());
+  }, [payload?.variants]);
+
+  // -----------------------------
+  // AUTO SELECT DEFAULTS
+  // -----------------------------
+  useEffect(() => {
+    if (sizes.length && selectedSize === null) {
+      setSelectedSize(sizes[0].id);
+    }
+  }, [sizes, selectedSize]);
+
+  useEffect(() => {
+    if (quantityOptions.length && selectedQuantityOption === null) {
+      setSelectedQuantityOption(quantityOptions[0]);
+    }
+  }, [quantityOptions, selectedQuantityOption]);
+
+  // -----------------------------
+  // GET SELECTED VARIANT
+  // -----------------------------
+  const selectedVariant = useMemo(() => {
+    return payload?.variants?.find(
+      (v: any) =>
+        v.size_id === selectedSize && v.quantity === selectedQuantityOption,
+    );
+  }, [payload?.variants, selectedSize, selectedQuantityOption]);
+
+  // -----------------------------
+  // CART CHECK
+  // -----------------------------
   const handleAddToCart = () => {
     const existingProduct = products.find(
-      (product) => product.id === String(productDetails.id),
+      (product) => product.id === String(payload?.id),
     );
 
     if (existingProduct) {
@@ -52,11 +98,11 @@ export default function ProductDetails({ payload }: Props) {
     dispatch(
       addToCart({
         id: String(payload?.id),
-        name: payload?.title,
-        price: String(payload?.price),
-        image: payload?.thumbnail,
+        name: payload?.name,
+        price: String(selectedVariant?.price ?? payload?.price_from),
+        image: selectedVariant?.image || payload?.thumbnail,
         quantity,
-        weight: `${selectedSize}mg`,
+        weight: selectedVariant?.size || `${selectedSize}mg`,
         packSize: selectedQuantityOption,
       }),
     );
@@ -64,14 +110,20 @@ export default function ProductDetails({ payload }: Props) {
     toast.success("Added to cart");
   };
 
+  const handleIncrease = () => setQuantity((prev) => prev + 1);
+
+  const handleDecrease = () => {
+    if (quantity > 1) setQuantity((prev) => prev - 1);
+  };
+
   return (
     <Container>
-      <div className="min-h-screen py-10">
+      <div className="py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* IMAGE */}
           <div className="bg-white rounded-3xl p-10 flex items-center justify-center">
             <Image
-              src={payload?.thumbnail || productImg1}
+              src={selectedVariant?.image || payload?.thumbnail || productImg1}
               alt={payload?.name}
               width={210}
               height={210}
@@ -85,9 +137,11 @@ export default function ProductDetails({ payload }: Props) {
             <div className="flex justify-between">
               <div>
                 <p className="text-xs text-gray-400">Order Now, Ships Today</p>
+
                 <h1 className="text-4xl font-bold text-[#222] mt-1">
                   {payload?.name}
                 </h1>
+
                 <p className="text-sm text-gray-400 mt-1">
                   CAS #: {payload?.cas_number}
                 </p>
@@ -95,38 +149,42 @@ export default function ProductDetails({ payload }: Props) {
 
               <div className="text-right">
                 <p className="text-3xl font-bold text-[#222]">
-                  ${productDetails.price}.00
+                  ${selectedVariant?.price ?? payload?.price_from}
                 </p>
                 <p className="text-sm text-gray-400">One-time</p>
               </div>
             </div>
 
-            {/* SIZE + QTY OPTIONS */}
+            {/* SIZE + QUANTITY */}
             <div className="flex justify-between gap-6">
+              {/* SIZE */}
               <div>
                 <p className="text-sm font-medium mb-3">Size</p>
+
                 <div className="flex gap-2 flex-wrap">
-                  {payload?.sizes?.map((size: any) => (
+                  {sizes.map((size) => (
                     <button
-                      key={size?.id}
-                      onClick={() => setSelectedSize(size?.id)}
+                      key={size.id}
+                      onClick={() => setSelectedSize(size.id)}
                       className={`px-4 py-1.5 rounded-full text-sm border transition
                         ${
-                          selectedSize === size?.id
+                          selectedSize === size.id
                             ? "bg-[#0A84FF] text-white border-[#0A84FF]"
                             : "bg-white text-gray-500 border-gray-200"
                         }`}
                     >
-                      {size?.size}
+                      {size.size}
                     </button>
                   ))}
                 </div>
               </div>
 
+              {/* QUANTITY */}
               <div>
                 <p className="text-sm font-medium mb-3">Quantity</p>
+
                 <div className="flex gap-2 flex-wrap">
-                  {productDetails.quantityOptions.map((item) => (
+                  {quantityOptions.map((item) => (
                     <button
                       key={item}
                       onClick={() => setSelectedQuantityOption(item)}
@@ -163,6 +221,7 @@ export default function ProductDetails({ payload }: Props) {
             {/* INFO BOX */}
             <div className="bg-[#f8f8f8] rounded-2xl p-4">
               <h3 className="font-semibold text-sm mb-2">Research Use Only</h3>
+
               <p className="text-xs text-gray-500 leading-5">
                 {payload?.research_use_only}
               </p>
@@ -170,7 +229,7 @@ export default function ProductDetails({ payload }: Props) {
 
             {/* TABS */}
             <div className="bg-[#f8f8f8] rounded-2xl p-4">
-              <ProductTabs />
+              <ProductTabs payload={payload?.coas} />
             </div>
           </div>
         </div>

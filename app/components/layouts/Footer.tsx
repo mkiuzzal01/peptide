@@ -8,16 +8,14 @@ import Facebook from "../icons/Facebook";
 import LinkedIn from "../icons/LinkedIn";
 import Logo from "../icons/Logo";
 import Twitter from "../icons/Twitter";
+import { useSubscribeMutation } from "@/redux/features/subscribe/subscribe.api";
 
 import Container from "../shared/Container";
 import { footerLinks } from "./navLinks";
 
-import { useSubscribeMutation } from "@/redux/subscribe/subscribe.api";
-
 export default function Footer() {
-  const [email, setEmail] = useState("");
-
   const [subscribe, { isLoading }] = useSubscribeMutation();
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

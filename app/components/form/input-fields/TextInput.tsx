@@ -69,7 +69,7 @@ export default function TextInput({
                 {...field}
                 type={isPassword ? (showPassword ? "text" : "password") : type}
                 placeholder={placeholder}
-                required={required}
+                required={true}
                 aria-invalid={!!errorMessage}
                 className={cn(
                   "h-11 w-full transition",

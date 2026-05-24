@@ -1,5 +1,4 @@
 "use client";
-
 import {
   FieldValues,
   FormProvider,
@@ -32,9 +31,7 @@ const AppForm = <T extends FieldValues>({
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(handleFormSubmit)} noValidate>
-        {children}
-      </form>
+      <form onSubmit={methods.handleSubmit(handleFormSubmit)}>{children}</form>
     </FormProvider>
   );
 };

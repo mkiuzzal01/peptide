@@ -5,7 +5,7 @@ interface ICartProduct {
   name: string;
   price: string;
   quantity: number;
-  image: string;
+  image: string | any;
   weight?: string;
   packSize?: string;
 }

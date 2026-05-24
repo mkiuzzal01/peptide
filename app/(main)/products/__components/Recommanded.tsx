@@ -4,6 +4,7 @@ import SectionTitle from "@/app/components/shared/SectionTitle";
 import ProductCard from "@/app/components/products/ProductCard";
 import Action from "@/app/components/buttons/Action";
 import ArrowIcon from "@/app/components/icons/ArrowIcon";
+import Link from "next/link";
 
 const products = [
   {
@@ -46,19 +47,21 @@ export default function Recommanded({ payload }: Props) {
       <SectionTitle
         title="Recommanded Products"
         icon={
-          <Action
-            iconPosition="right"
-            name={"See All Products"}
-            title="Browse Products"
-            icon={
-              <ArrowIcon
-                bgColor="bg-blue-600"
-                size="w-6 h-6"
-                iconColor="white"
-              />
-            }
-            className="bg-[#FFFFF] border border-blue-600 text-blue-600 h-10 pl-6 pr-2 rounded-full text-sm sm:text-base  font-semibold transition-all duration-200 flex items-center gap-4"
-          />
+          <Link href={"/products"}>
+            <Action
+              iconPosition="right"
+              name={"See All Products"}
+              title="Browse Products"
+              icon={
+                <ArrowIcon
+                  bgColor="bg-blue-600"
+                  size="w-6 h-6"
+                  iconColor="white"
+                />
+              }
+              className="bg-[#FFFFF] border border-blue-600 text-blue-600 h-10 pl-6 pr-2 rounded-full text-sm sm:text-base  font-semibold transition-all duration-200 flex items-center gap-4"
+            />
+          </Link>
         }
       />
 

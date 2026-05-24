@@ -12,6 +12,7 @@ interface TextAreaProps {
   className?: string;
   rows?: number;
   disabled?: boolean;
+  required?: boolean;
 }
 
 export default function TextArea({
@@ -21,44 +22,60 @@ export default function TextArea({
   className,
   rows = 4,
   disabled = false,
+  required = false,
 }: TextAreaProps) {
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
-  const errorMessage = (errors?.[name]?.message as string | undefined) || "";
+  const fieldError = errors?.[name];
+
+  const errorMessage =
+    (fieldError?.message as string) ||
+    (fieldError?.type === "required" ? `${label} is required` : "");
 
   return (
     <div className={cn("space-y-1.5 w-full mb-6", className)}>
       {/* LABEL */}
-      <Label htmlFor={name} className="text-sm font-medium text-gray-600">
-        {label}
-      </Label>
+      <div className="flex items-center justify-between">
+        <Label
+          htmlFor={name}
+          className="text-sm font-medium text-gray-600 flex items-center gap-1"
+        >
+          {label}
+          {required && <span className="text-red-500">*</span>}
+        </Label>
+      </div>
 
+      {/* CONTROL */}
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
-          <>
+          <div className="space-y-1">
             <Textarea
               id={name}
               {...field}
               rows={rows}
               placeholder={placeholder}
               disabled={disabled}
+              aria-invalid={!!fieldError}
+              required={required}
               className={cn(
-                "w-full transition resize-none",
+                "w-full resize-none transition",
+                "min-h-[120px]",
                 "focus-visible:ring-2 focus-visible:ring-primary/30",
                 "focus-visible:border-primary",
-                errorMessage && "border-red-500",
+                fieldError && "border-red-500 focus-visible:ring-red-200",
               )}
             />
 
+            {/* ERROR */}
             {errorMessage && (
-              <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+              <p className="text-xs text-red-500">{errorMessage}</p>
             )}
-          </>
+          </div>
         )}
       />
     </div>

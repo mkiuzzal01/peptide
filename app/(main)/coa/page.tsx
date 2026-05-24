@@ -2,6 +2,8 @@ import Container from "@/app/components/shared/Container";
 import SectionTitle from "@/app/components/shared/SectionTitle";
 import coaImage from "@/public/products/image 32.png";
 import COA_Card from "./__components/COA_Card";
+import { getCoa } from "@/actions/quires/coa.api";
+import NotFoundMessage from "@/app/components/utils/NotFoundMessage";
 
 const coaList = [
   {
@@ -84,7 +86,13 @@ const coaList = [
   },
 ];
 
-export default function Page() {
+export default async function Page() {
+  const data = await getCoa();
+
+  if (data.length === 0) {
+    return <NotFoundMessage title="No COA data available" />;
+  }
+
   return (
     <Container>
       <div className="py-10">
@@ -97,14 +105,13 @@ export default function Page() {
 
       {/* Grid */}
       <div className="grid gap-4 pt-2 pb-10">
-        {coaList.map((item) => (
+        {data?.data?.map((item: any) => (
           <COA_Card
             key={item.id}
-            title={item.title}
-            cas={item.cas}
-            doseOptions={["5mg", "10mg", "20mg"]}
-            image={item.image}
-            certificates={item.certificate}
+            title={item.name}
+            coas={item.coas}
+            sizes={item?.sizes}
+            image={item.thumbnail}
           />
         ))}
       </div>

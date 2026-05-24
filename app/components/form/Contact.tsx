@@ -5,12 +5,26 @@ import AppForm from "./AppForm";
 import TextInput from "./input-fields/TextInput";
 import TextArea from "./input-fields/TextArea";
 import { FieldValues } from "react-hook-form";
+import { useContactMutation } from "@/redux/features/contact/contact.api";
+import SubmitButton from "../buttons/SubmitButton";
+import { toast } from "react-toastify";
 
 export default function Contact() {
+  const [contact, { isLoading }] = useContactMutation();
   const [topic, setTopic] = useState("Wholesale");
 
-  const onSubmit = (values: FieldValues) => {
-    console.log({ ...values, topic });
+  const onSubmit = async (values: FieldValues, reset: () => void) => {
+    try {
+      const res = await contact({ ...values, topic: topic }).unwrap();
+      if (res.message) {
+        toast.success(res.message);
+        reset();
+      }
+    } catch (error: any) {
+      if (error.data.message) {
+        toast.error(error.data.message);
+      }
+    }
   };
 
   return (
@@ -19,6 +33,7 @@ export default function Contact() {
         <div className="space-y-6">
           {/* NAME */}
           <TextInput
+            required
             type="text"
             name="name"
             label="Full Name"
@@ -29,6 +44,7 @@ export default function Contact() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             {/* EMAIL */}
             <TextInput
+              required
               type="email"
               name="email"
               label="Email Address"
@@ -65,20 +81,19 @@ export default function Contact() {
 
           {/* MESSAGE */}
           <TextArea
+            required
             label="Message"
             name="description"
             placeholder="Write your message here..."
-            rows={8}
           />
 
           {/* SUBMIT */}
           <div className="flex justify-end pt-2">
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 active:scale-[0.98] transition-all text-white px-6 py-3 rounded-full text-sm font-medium shadow-sm"
-            >
-              Send Message
-            </button>
+            <SubmitButton
+              text="Send Message"
+              loading={isLoading}
+              className="rounded-full h-10 w-40"
+            />
           </div>
         </div>
       </AppForm>

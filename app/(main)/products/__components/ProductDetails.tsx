@@ -11,7 +11,7 @@ import { addToCart } from "@/redux/features/cart/cart.slice";
 import { toast } from "react-toastify";
 
 interface Props {
-  slug: string;
+  payload: any;
 }
 
 const productDetails = {
@@ -24,7 +24,7 @@ const productDetails = {
   price: 39,
 };
 
-export default function ProductDetails({ slug }: Props) {
+export default function ProductDetails({ payload }: Props) {
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.cart);
 
@@ -71,8 +71,10 @@ export default function ProductDetails({ slug }: Props) {
           {/* IMAGE */}
           <div className="bg-white rounded-3xl p-10 flex items-center justify-center">
             <Image
-              src={productDetails.image}
-              alt={productDetails.title}
+              src={payload?.thumbnail || productImg1}
+              alt={payload?.name}
+              width={210}
+              height={210}
               className="w-[210px] h-auto object-contain"
             />
           </div>
@@ -84,10 +86,10 @@ export default function ProductDetails({ slug }: Props) {
               <div>
                 <p className="text-xs text-gray-400">Order Now, Ships Today</p>
                 <h1 className="text-4xl font-bold text-[#222] mt-1">
-                  {productDetails.title}
+                  {payload?.name}
                 </h1>
                 <p className="text-sm text-gray-400 mt-1">
-                  {productDetails.cas}
+                  CAS #: {payload?.cas_number}
                 </p>
               </div>
 
@@ -104,18 +106,18 @@ export default function ProductDetails({ slug }: Props) {
               <div>
                 <p className="text-sm font-medium mb-3">Size</p>
                 <div className="flex gap-2 flex-wrap">
-                  {productDetails.size.map((size) => (
+                  {payload?.sizes?.map((size: any) => (
                     <button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
+                      key={size?.id}
+                      onClick={() => setSelectedSize(size?.id)}
                       className={`px-4 py-1.5 rounded-full text-sm border transition
                         ${
-                          selectedSize === size
+                          selectedSize === size?.id
                             ? "bg-[#0A84FF] text-white border-[#0A84FF]"
                             : "bg-white text-gray-500 border-gray-200"
                         }`}
                     >
-                      {size} mg
+                      {size?.size}
                     </button>
                   ))}
                 </div>
@@ -162,7 +164,7 @@ export default function ProductDetails({ slug }: Props) {
             <div className="bg-[#f8f8f8] rounded-2xl p-4">
               <h3 className="font-semibold text-sm mb-2">Research Use Only</h3>
               <p className="text-xs text-gray-500 leading-5">
-                All products are intended solely for laboratory research only.
+                {payload?.research_use_only}
               </p>
             </div>
 

@@ -1,23 +1,26 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
 import Action from "../buttons/Action";
 import Bag from "../icons/Bag";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cart/cart.slice";
 import { toast } from "react-toastify";
+import prodcutImage from "@/public/products/products.png";
+import Image from "next/image";
 
 interface ProductCardProps {
-  id: number;
+  id: number | string;
+  slug: string;
   cas: string;
   name: string;
   price: string;
-  image: StaticImageData;
+  image: string;
 }
 
 export default function ProductCard({
   id,
+  slug,
   cas,
   name,
   price,
@@ -69,7 +72,7 @@ export default function ProductCard({
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-3">
-          <Link href={`/products/${id}`}>
+          <Link href={`/products/${slug}`}>
             <Action
               name="View Details"
               title="View Details"
@@ -113,7 +116,7 @@ export default function ProductCard({
       {/* Product Image */}
       <div className="flex items-center justify-center p-3">
         <Image
-          src={image}
+          src={image || prodcutImage}
           alt={name}
           width={300}
           height={300}

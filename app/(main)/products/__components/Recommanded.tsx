@@ -36,7 +36,11 @@ const products = [
   },
 ];
 
-export default function Recommanded() {
+interface Props {
+  payload: any;
+}
+
+export default function Recommanded({ payload }: Props) {
   return (
     <Container>
       <SectionTitle
@@ -59,14 +63,15 @@ export default function Recommanded() {
       />
 
       <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
-        {products.map((product) => (
+        {payload?.map((product: any) => (
           <div key={product.id}>
             <ProductCard
-              id={product.id}
-              cas={product.cas}
-              name={product.name}
-              price={product.price}
-              image={product.image}
+              id={product?.id}
+              slug={product?.slug}
+              cas={product?.cas_number}
+              name={product?.name}
+              price={product?.price_from}
+              image={product?.thumbnail}
             />
           </div>
         ))}

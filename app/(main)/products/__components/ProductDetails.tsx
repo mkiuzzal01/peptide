@@ -51,10 +51,10 @@ export default function ProductDetails({ payload }: Props) {
 
     dispatch(
       addToCart({
-        id: String(productDetails.id),
-        name: productDetails.title,
-        price: String(productDetails.price),
-        image: productDetails.image,
+        id: String(payload?.id),
+        name: payload?.title,
+        price: String(payload?.price),
+        image: payload?.thumbnail,
         quantity,
         weight: `${selectedSize}mg`,
         packSize: selectedQuantityOption,

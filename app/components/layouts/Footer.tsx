@@ -1,77 +1,141 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "react-toastify";
+
 import Facebook from "../icons/Facebook";
 import LinkedIn from "../icons/LinkedIn";
 import Logo from "../icons/Logo";
 import Twitter from "../icons/Twitter";
+
 import Container from "../shared/Container";
 import { footerLinks } from "./navLinks";
 
+import { useSubscribeMutation } from "@/redux/subscribe/subscribe.api";
+
 export default function Footer() {
+  const [email, setEmail] = useState("");
+
+  const [subscribe, { isLoading }] = useSubscribeMutation();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      return toast.error("Email is required");
+    }
+
+    try {
+      const res = await subscribe({ email }).unwrap();
+
+      toast.success(res?.message || "Subscribed successfully");
+
+      setEmail("");
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message || "An error occurred while subscribing",
+      );
+    }
+  };
+
   return (
     <footer className="bg-white py-16">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* LEFT */}
           <div className="flex flex-col gap-4">
             <Logo size={32} />
 
-            <h2 className="text-2xl font-semibold leading-snug">
+            <h2 className="text-2xl font-semibold leading-snug text-gray-900">
               Engineered for Research Precision
             </h2>
 
-            {/* Social */}
-            <div className="flex items-center gap-3 mt-2">
+            {/* SOCIAL */}
+            <div className="mt-2 flex items-center gap-3">
               {[Twitter, Facebook, LinkedIn].map((Icon, i) => (
-                <div
+                <button
                   key={i}
-                  className="w-9 h-9 flex items-center justify-center rounded-full bg-[#E6E9ED] hover:bg-[#037FFF] hover:text-white transition"
+                  type="button"
+                  className="
+                    flex h-9 w-9 items-center justify-center
+                    rounded-full bg-[#E6E9ED]
+                    transition-all duration-200
+                    hover:bg-[#037FFF] hover:text-white
+                  "
                 >
                   <Icon />
-                </div>
+                </button>
               ))}
             </div>
           </div>
 
           {/* MIDDLE */}
           <div className="flex flex-col gap-3">
-            <h3 className="font-semibold text-sm text-gray-900">
+            <h3 className="text-sm font-semibold text-gray-900">
               Contact with us
             </h3>
 
-            <a className="text-[#037FFF] text-sm" href="tel:+1123xxxxxx">
+            <a
+              className="text-sm text-[#037FFF] hover:underline"
+              href="tel:+1123xxxxxx"
+            >
               +1 123 xxx xxx
             </a>
 
             <a
-              className="text-[#037FFF] text-sm"
+              className="text-sm text-[#037FFF] hover:underline"
               href="mailto:support@peptidelabsusa.com"
             >
               support@peptidelabsusa.com
             </a>
           </div>
 
-          {/* RIGHT (Newsletter) */}
-          <div className="flex flex-col gap-3">
-            <h3 className="font-semibold text-sm text-gray-900">
+          {/* RIGHT */}
+          <div className="flex flex-col gap-4">
+            <h3 className="text-sm font-semibold text-gray-900">
               Get in touch with us
             </h3>
 
-            <div className="flex">
+            {/* NEWSLETTER */}
+            <form
+              onSubmit={handleSubmit}
+              className="flex w-full overflow-hidden rounded-full border border-[#037FFF]"
+            >
               <input
-                className="w-full h-10 px-3 text-sm border border-[#037FFF] rounded-l-full outline-none"
+                required
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email address"
+                aria-label="Email address"
+                className="
+                  h-11 w-full bg-white px-4 text-sm
+                  outline-none placeholder:text-gray-400
+                "
               />
 
-              <button className="bg-[#037FFF] text-white px-5 text-sm rounded-r-full hover:bg-[#0266d6] transition">
-                Subscribe
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="
+                  flex shrink-0 items-center justify-center
+                  bg-[#037FFF] px-5 text-sm font-medium text-white
+                  transition hover:bg-[#0266d6]
+                  disabled:cursor-not-allowed disabled:opacity-70
+                "
+              >
+                {isLoading ? "Submitting..." : "Subscribe"}
               </button>
-            </div>
-            <div className="flex justify-between items-center gap-3">
+            </form>
+
+            {/* FOOTER LINKS */}
+            <div className="flex flex-wrap items-center gap-3">
               {footerLinks.map((link, i) => (
                 <Link
                   key={i}
                   href={link.href}
-                  className="text-sm text-[#637381]"
+                  className="text-sm text-[#637381] transition hover:text-[#037FFF]"
                 >
                   {link.title}
                 </Link>
@@ -80,31 +144,28 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Disclaimer */}
-        <div className="text-xs text-gray-500 leading-relaxed space-y-3 py-10">
+        {/* DISCLAIMER */}
+        <div className="space-y-3 py-10 text-xs leading-relaxed text-gray-500">
           <p>
             All products on this site are for research and development use only.
-            Products are not for human consumption of any kind. The statements
-            made on this website have not been evaluated by the US Food and Drug
-            Administration. The statements and the products of this company are
-            not intended to diagnose, treat, cure, or prevent any disease.
+            Products are not for human consumption of any kind.
           </p>
+
           <p>
-            Direct Peptides is a chemical supplier. Direct Peptides is not a
-            compounding pharmacy or chemical compounding facility as defined
-            under 503A of the Federal Food, Drug, and Cosmetic Act. Direct
-            Peptides is not an outsourcing facility as defined under 503B of the
-            Federal Food, Drug, and Cosmetic Act.
+            Direct Peptides is a chemical supplier and not a compounding
+            pharmacy or outsourcing facility under the Federal Food, Drug, and
+            Cosmetic Act.
           </p>
+
           <p>
-            All products are sold for research, laboratory, or analytical
-            purposes only, and are not for human consumption.
+            All products are sold for laboratory, analytical, and research
+            purposes only.
           </p>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-text-muted py-6 text-center text-xs text-gray-500">
-          © 2023 All Rights Reserved
+        {/* BOTTOM */}
+        <div className="border-t border-gray-200 py-6 text-center text-xs text-gray-500">
+          © 2026 All Rights Reserved
         </div>
       </Container>
     </footer>

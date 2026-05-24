@@ -43,6 +43,7 @@ export default function Recent() {
         {products.map((product) => (
           <div key={product.id}>
             <ProductCard
+              slug={product?.name}
               id={product.id}
               cas={product.cas}
               name={product.name}

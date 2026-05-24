@@ -15,7 +15,7 @@ interface ProductCardProps {
   cas: string;
   name: string;
   price: string;
-  image: string;
+  image: string | any;
 }
 
 export default function ProductCard({

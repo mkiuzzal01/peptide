@@ -21,6 +21,7 @@ export default function AllProducts() {
         {products.map((product) => (
           <ProductCard
             key={product.id}
+            slug={product?.name}
             id={product.id}
             cas={product.cas}
             name={product.name}

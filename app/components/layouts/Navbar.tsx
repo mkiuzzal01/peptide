@@ -10,8 +10,14 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/auth/auth.slice";
 import { toast } from "react-toastify";
 import { persistor } from "@/redux/store";
+import Image from "next/image";
 
-export default function Navbar() {
+interface Props {
+  systemInfo: any;
+}
+
+export default function Navbar({ systemInfo }: Props) {
+  const info = systemInfo?.data;
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const pathname = usePathname();
@@ -28,8 +34,16 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/">
           <div className="flex items-center gap-2">
-            <Logo />
-            <p className="text-lg font-semibold">Peptide Labs USA</p>
+            {/* <Logo /> */}
+            <div className="relative h-10 w-10">
+              <Image
+                src={"/" + info?.logo || info?.favicon || "/logo.png"}
+                alt="logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="text-lg font-semibold">{info?.title}</p>
           </div>
         </Link>
 

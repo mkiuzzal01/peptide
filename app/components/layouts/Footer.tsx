@@ -3,17 +3,24 @@
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
 import Facebook from "../icons/Facebook";
 import LinkedIn from "../icons/LinkedIn";
-import Logo from "../icons/Logo";
 import Twitter from "../icons/Twitter";
 import { useSubscribeMutation } from "@/redux/features/subscribe/subscribe.api";
 
 import Container from "../shared/Container";
 import { footerLinks } from "./navLinks";
+import Image from "next/image";
 
-export default function Footer() {
+interface Props {
+  systemInfo: any;
+  socialLinks: any;
+}
+
+export default function Footer({ systemInfo, socialLinks }: Props) {
+  const info = systemInfo?.data;
+  const socialData = socialLinks?.data;
+
   const [subscribe, { isLoading }] = useSubscribeMutation();
   const [email, setEmail] = useState("");
 
@@ -37,16 +44,37 @@ export default function Footer() {
     }
   };
 
+  const socials = [
+    {
+      icon: Twitter,
+      url: socialData?.twitter_link,
+    },
+    {
+      icon: Facebook,
+      url: socialData?.facebook_link,
+    },
+    {
+      icon: LinkedIn,
+      url: socialData?.linkedin_link,
+    },
+  ];
+
   return (
     <footer className="bg-white py-16">
       <Container>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* LEFT */}
           <div className="flex flex-col gap-4">
-            <Logo size={32} />
-
+            {/* <Logo /> */}
+            <Image
+              src={"/" + info?.logo || info?.favicon || "/logo.png"}
+              alt="logo"
+              width={100}
+              height={100}
+              className="object-contain"
+            />
             <h2 className="text-2xl font-semibold leading-snug text-gray-900">
-              Engineered for Research Precision
+              {info?.title}
             </h2>
 
             {/* SOCIAL */}
@@ -70,22 +98,20 @@ export default function Footer() {
 
           {/* MIDDLE */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-semibold text-gray-900">
-              Contact with us
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-900">{}</h3>
 
             <a
               className="text-sm text-[#037FFF] hover:underline"
-              href="tel:+1123xxxxxx"
+              href={`tel:${info?.number}`}
             >
-              +1 123 xxx xxx
+              {info?.number}
             </a>
 
             <a
               className="text-sm text-[#037FFF] hover:underline"
-              href="mailto:support@peptidelabsusa.com"
+              href={`mailto:${info?.email}`}
             >
-              support@peptidelabsusa.com
+              {info?.email}
             </a>
           </div>
 
@@ -163,7 +189,7 @@ export default function Footer() {
 
         {/* BOTTOM */}
         <div className="border-t border-gray-200 py-6 text-center text-xs text-gray-500">
-          © 2026 All Rights Reserved
+          {info?.copyright_text}
         </div>
       </Container>
     </footer>

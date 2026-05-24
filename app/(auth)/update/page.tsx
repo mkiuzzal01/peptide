@@ -1,5 +1,13 @@
-import Update from '@/app/components/form/Update';
+import Update from "@/app/components/form/Update";
 
-export default function page() {
-  return <Update />;
+interface Props {
+  searchParams: {
+    t: string;
+  };
+}
+
+export default async function page({ searchParams }: Props) {
+  const { t: token } = await searchParams;
+
+  return <Update token={token} />;
 }

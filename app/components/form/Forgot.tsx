@@ -1,22 +1,31 @@
-'use client';
+"use client";
 
-import { FieldValues } from 'react-hook-form';
-import Container from '../shared/Container';
-import AppForm from './AppForm';
-import TextInput from './input-fields/TextInput';
-import { ArrowLeft, Mail } from 'lucide-react';
-import Image from 'next/image';
-import SocialLogin from '../utils/SocialLogin';
-import SubmitButton from '../buttons/SubmitButton';
-import logo from '@/public/auth/sign-in.jpg';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { FieldValues } from "react-hook-form";
+import Container from "../shared/Container";
+import AppForm from "./AppForm";
+import TextInput from "./input-fields/TextInput";
+import { ArrowLeft, Mail } from "lucide-react";
+import SubmitButton from "../buttons/SubmitButton";
+import { useRouter } from "next/navigation";
+import { useForgotPasswordMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "react-toastify";
 
 export default function Forgot() {
   const router = useRouter();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
+
   const onSubmit = async (values: FieldValues, reset: () => void) => {
-    console.log(values);
-    reset();
+    try {
+      const res = await forgotPassword(values).unwrap();
+
+      if (res?.message) {
+        toast.info(res?.message);
+        reset();
+        router.push(`/verify?email=${values?.email}&from=forgot`);
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
   };
 
   return (
@@ -27,7 +36,7 @@ export default function Forgot() {
             <button
               className="flex items-center gap-2 text-xs cursor-pointer  font-semibold text-gray-700"
               onClick={() => {
-                router.push('/sign-in');
+                router.push("/sign-in");
               }}
             >
               <ArrowLeft size={18} />
@@ -51,7 +60,7 @@ export default function Forgot() {
             <AppForm
               onSubmit={onSubmit}
               defaultValues={{
-                email: '',
+                email: "",
               }}
             >
               <div className="space-y-5">
@@ -66,6 +75,7 @@ export default function Forgot() {
                 {/* SUBMIT */}
                 <div className="pt-2">
                   <SubmitButton
+                    loading={isLoading}
                     text="Reset Password"
                     className="h-12 w-full rounded-full"
                   />
@@ -74,7 +84,7 @@ export default function Forgot() {
                   <button
                     className="text-xs font-semibold text-gray-700 cursor-pointer"
                     onClick={() => {
-                      router.push('/sign-in');
+                      router.push("/sign-in");
                     }}
                   >
                     Back

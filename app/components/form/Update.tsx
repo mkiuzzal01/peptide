@@ -1,17 +1,37 @@
-'use client';
-import Container from '../shared/Container';
-import AppForm from './AppForm';
-import { FieldValues } from 'react-hook-form';
-import TextInput from './input-fields/TextInput';
-import { ArrowLeft, Lock } from 'lucide-react';
-import SubmitButton from '../buttons/SubmitButton';
-import { useRouter } from 'next/navigation';
+"use client";
+import Container from "../shared/Container";
+import AppForm from "./AppForm";
+import { FieldValues } from "react-hook-form";
+import TextInput from "./input-fields/TextInput";
+import { ArrowLeft, Lock } from "lucide-react";
+import SubmitButton from "../buttons/SubmitButton";
+import { useRouter } from "next/navigation";
+import { useResetPasswordMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "react-toastify";
 
-export default function Update() {
+interface Props {
+  token?: string;
+}
+
+export default function Update({ token }: Props) {
+  const [resetPassword] = useResetPasswordMutation();
   const router = useRouter();
+
   const onSubmit = async (values: FieldValues, reset: () => void) => {
-    console.log(values);
-    reset();
+    try {
+      const res = await resetPassword({
+        ...values,
+        token,
+      }).unwrap();
+
+      if (res?.message) {
+        toast.success(res?.message);
+        reset();
+        router.push("/sign-in");
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
   };
   return (
     <Container>
@@ -21,7 +41,7 @@ export default function Update() {
             <button
               className="flex items-center gap-2 text-xs cursor-pointer  font-semibold text-gray-700"
               onClick={() => {
-                router.push('/sign-in');
+                router.push("/sign-in");
               }}
             >
               <ArrowLeft size={18} />
@@ -32,10 +52,10 @@ export default function Update() {
           <div className="p-6 md:p-10 flex flex-col justify-center">
             {/* HEADER */}
             <div className="flex justify-center items-center flex-col gap-1 mb-8">
-              <h2 className="font-semibold text-2xl md:text-3xl lg:text-4xl mb-2">
-                Enter your new password.{' '}
+              <h2 className="text-2xl font-semibold ">
+                Enter your new password.{" "}
               </h2>
-              <p className="text-xs md:text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 Secure Your Account with a New Password.
               </p>
             </div>
@@ -44,7 +64,7 @@ export default function Update() {
             <AppForm
               onSubmit={onSubmit}
               defaultValues={{
-                email: '',
+                email: "",
               }}
             >
               <div className="space-y-6">
@@ -60,7 +80,7 @@ export default function Update() {
                 <TextInput
                   icon={<Lock size={18} />}
                   label="Confirm Password"
-                  name="confirm-password"
+                  name="password_confirmation"
                   type="password"
                   className="h-12"
                   placeholder="Enter confirm password"
@@ -77,7 +97,7 @@ export default function Update() {
                   <button
                     className="text-xs font-semibold text-gray-700 cursor-pointer"
                     onClick={() => {
-                      router.push('/sign-in');
+                      router.push("/sign-in");
                     }}
                   >
                     Back

@@ -26,7 +26,7 @@ const productDetails = {
 
 export default function ProductDetails({ slug }: Props) {
   const dispatch = useAppDispatch();
-  const { products } = useAppSelector((state) => state.addToCart);
+  const { products } = useAppSelector((state) => state.cart);
 
   const [selectedSize, setSelectedSize] = useState<number>(5);
   const [selectedQuantityOption, setSelectedQuantityOption] =

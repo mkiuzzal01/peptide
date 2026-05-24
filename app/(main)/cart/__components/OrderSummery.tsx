@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function OrderSummery() {
   const [coupon, setCoupon] = useState("");
 
-  const { products } = useAppSelector((state) => state.addToCart);
+  const { products } = useAppSelector((state) => state.cart);
 
   // 🔥 Subtotal (price * quantity)
   const subTotal = useMemo(() => {

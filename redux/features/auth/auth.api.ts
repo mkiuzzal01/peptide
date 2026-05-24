@@ -10,6 +10,7 @@ const authSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
+
     register: builder.mutation({
       query: (body) => ({
         url: "/register",
@@ -28,10 +29,38 @@ const authSlice = baseApi.injectEndpoints({
       invalidatesTags: ["auth"],
     }),
 
-    logout: builder.mutation({
-      query: () => ({
-        url: "/logout",
+    forgotVerifyOTP: builder.mutation({
+      query: (body) => ({
+        url: "/forgot-verify-otp",
         method: "POST",
+        body,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+
+    forgotPassword: builder.mutation({
+      query: (body) => ({
+        url: "/forgot-password",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: "/reset-password",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+
+    resendOTP: builder.mutation({
+      query: (body) => ({
+        url: "/resend_otp",
+        method: "POST",
+        body,
       }),
       invalidatesTags: ["auth"],
     }),
@@ -41,6 +70,9 @@ const authSlice = baseApi.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useLogoutMutation,
   useVerifyOTPMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useResendOTPMutation,
+  useForgotVerifyOTPMutation,
 } = authSlice;

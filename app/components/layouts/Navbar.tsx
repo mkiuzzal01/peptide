@@ -6,9 +6,21 @@ import Bag from "../icons/Bag";
 import Logo from "../icons/Logo";
 import Container from "../shared/Container";
 import { navigationLinks } from "./navLinks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout } from "@/redux/features/auth/auth.slice";
+import { toast } from "react-toastify";
+import { persistor } from "@/redux/store";
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    await persistor.purge();
+    dispatch(logout());
+    toast.success("Logout successfully");
+  };
 
   return (
     <nav className="bg-white">
@@ -52,9 +64,17 @@ export default function Navbar() {
             />
           </Link>
 
-          <Link href={"/sign-in"}>
-            <Action className="rounded-full px-4 py-5" name="Sign in" />
-          </Link>
+          {user ? (
+            <Action
+              onClick={handleLogout}
+              className="rounded-full px-4 py-5"
+              name="Logout"
+            />
+          ) : (
+            <Link href={"/sign-in"}>
+              <Action className="rounded-full px-4 py-5" name="Sign in" />
+            </Link>
+          )}
         </div>
       </Container>
     </nav>

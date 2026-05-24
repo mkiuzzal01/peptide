@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 interface IUser {
   id: string;
@@ -21,12 +22,21 @@ const initialState: IInitState = {
 
 export const authSlice = createSlice({
   name: "auth",
+
   initialState,
+
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+
+      Cookies.set("token", action.payload.token, {
+        expires: 7,
+        secure: true,
+        sameSite: "strict",
+      });
     },
+
     logout: (state) => {
       state.user = null;
       state.token = null;

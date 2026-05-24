@@ -12,20 +12,36 @@ import Link from "next/link";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/auth/auth.slice";
 
 export default function Signin() {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (values: FieldValues, reset: () => void) => {
     try {
       const res = await login(values).unwrap();
-
-      console.log("====================", res);
-
       if (res?.message) {
-        toast.info(res?.message);
+        dispatch(
+          setUser({
+            user: {
+              id: String(res.data.id),
+              name: res.data.name,
+              email: res.data.email,
+              role: res.data.role,
+              avatar: res.data.avatar,
+              time_zone: res.data.timezone,
+            },
+            token: res.token,
+          }),
+        );
+
+        toast.success(res.message);
+
         reset();
+
         router.push("/");
       }
     } catch (error) {

@@ -1,10 +1,8 @@
 "use client";
 import { FieldValues } from "react-hook-form";
-import Container from "../shared/Container";
 import AppForm from "./AppForm";
 import TextInput from "./input-fields/TextInput";
 import { Textarea } from "@/components/ui/textarea";
-import SubmitButton from "../buttons/SubmitButton";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CheckOut() {

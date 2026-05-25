@@ -3,9 +3,18 @@ import SectionTitle from "@/app/components/shared/SectionTitle";
 import BlogCard from "./__components/BlogCard";
 import FAQ from "@/app/components/FAQ/FAQ";
 import { getBlogs } from "@/actions/quires/blog.api";
+import { getFaq } from "@/actions/quires/faq.api";
+import NotFoundMessage from "@/app/components/utils/NotFoundMessage";
 
 export default async function page() {
   const { data: payload } = await getBlogs();
+  const { data: faqs } = await getFaq();
+
+  if (!payload || !faqs) {
+    return (
+      <NotFoundMessage title="No blogs found" message="Contact with support" />
+    );
+  }
 
   return (
     <Container>
@@ -30,7 +39,7 @@ export default async function page() {
         </div>
 
         <div>
-          <FAQ />
+          <FAQ faqs={faqs} />
         </div>
       </div>
     </Container>

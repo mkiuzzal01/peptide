@@ -43,7 +43,11 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
+interface Props {
+  faqs: any[];
+}
+
+export default function FAQ({ faqs }: Props) {
   return (
     <Container>
       <SectionTitle
@@ -78,7 +82,7 @@ export default function FAQ() {
       {/* FAQ Accordion */}
       <div className="mt-8 mb-20">
         <Accordion className="w-full space-y-3">
-          {faqs.map((faq) => (
+          {faqs?.map((faq: any) => (
             <AccordionItem
               key={faq.id}
               value={`item-${faq.id}`}
@@ -89,7 +93,7 @@ export default function FAQ() {
               </AccordionTrigger>
 
               <AccordionContent className="text-gray-500 text-sm leading-relaxed pb-3">
-                {faq.answer}
+                <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
               </AccordionContent>
             </AccordionItem>
           ))}

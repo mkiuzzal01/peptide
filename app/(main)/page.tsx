@@ -7,11 +7,13 @@ import OurProcess from "../components/process/OurProcess";
 import Explore from "../components/products/Explore";
 import Recent from "../components/products/Recent";
 import NotFoundMessage from "../components/utils/NotFoundMessage";
+import { getFaq } from "@/actions/quires/faq.api";
 
 export default async function Home() {
   const { data: allProducts } = await getProducts(null);
+  const { data: faqs } = await getFaq();
 
-  if (!allProducts) {
+  if (!allProducts || !faqs) {
     return (
       <NotFoundMessage
         title="No products found"
@@ -28,7 +30,7 @@ export default async function Home() {
       <Explore products={allProducts?.data} />
       <Recent products={allProducts?.data} />
       <OurProcess />
-      <FAQ />
+      <FAQ faqs={faqs} />
     </>
   );
 }

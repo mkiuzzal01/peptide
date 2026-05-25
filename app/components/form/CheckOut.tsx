@@ -1,9 +1,11 @@
 "use client";
+
 import { FieldValues } from "react-hook-form";
 import AppForm from "./AppForm";
 import TextInput from "./input-fields/TextInput";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import SubmitButton from "../buttons/SubmitButton";
+import TextArea from "./input-fields/TextArea";
 
 export default function CheckOut() {
   const handleSubmit = (data: FieldValues) => {
@@ -18,40 +20,56 @@ export default function CheckOut() {
         </h2>
 
         <AppForm onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1">
+          <div className="grid grid-cols-1 gap-4">
             <TextInput
-              name="name"
+              name="customer_name"
               placeholder="Enter your name"
               label="Full name"
+              required
             />
 
             <TextInput
-              name="email"
+              name="customer_email"
               type="email"
               placeholder="Enter your email"
               label="Email"
-            />
-            <TextInput
-              name="phone"
-              placeholder="Enter your phone number"
-              label="Phone"
+              required
             />
 
+            <TextInput
+              name="customer_phone"
+              placeholder="Enter your phone number"
+              label="Phone"
+              required
+            />
+
+            {/* ADDRESS */}
             <div className="col-span-full">
-              <Textarea
-                className="h-32 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                name="address"
+              <TextArea
+                label="Address"
+                required
+                name="customer_address"
                 placeholder="Enter your address"
               />
             </div>
+
+            {/* TERMS */}
+            <div className="flex items-center gap-2 py-2">
+              <Checkbox id="terms" required />
+
+              <label htmlFor="terms" className="text-xs text-gray-700">
+                I agree to Tech Takes Terms of Service and Privacy Policy.
+              </label>
+            </div>
+          </div>
+
+          <div className="flex justify-end mt-5">
+            <SubmitButton
+              text="Proceed to Checkout"
+              className="h-12 w-full lg:w-auto rounded-md"
+            />
           </div>
         </AppForm>
-        <div className="flex items-center gap-2 py-2">
-          <Checkbox />
-          <label className="text-xs text-gray-700" htmlFor="terms">
-            I agree to Tech Takes Terms of Service and Privacy Policy.
-          </label>
-        </div>
       </div>
     </div>
   );

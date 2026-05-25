@@ -18,9 +18,13 @@ export default async function MainLayout({ children }: MainLayoutProps) {
     <div className="flex flex-col min-h-screen justify-between">
       <header>
         <Top />
-        <Navbar systemInfo={systemInfo} />
+        <div className="sticky top-0 z-50">
+          <Navbar systemInfo={systemInfo} />
+        </div>
       </header>
+
       <main className="flex-1">{children}</main>
+
       <Footer systemInfo={systemInfo} socialLinks={socialLinks} />
     </div>
   );

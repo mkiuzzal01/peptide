@@ -51,23 +51,6 @@ export default function CheckOutSummery() {
           <span>€ {total.toFixed(2)}</span>
         </div>
       </div>
-
-      {/* CHECKOUT */}
-      <button
-        className="
-            mt-5
-            w-full
-            rounded-xl
-            bg-blue-600
-            py-3
-            font-semibold
-            text-white
-            hover:bg-blue-700
-            transition
-          "
-      >
-        Proceed to Checkout
-      </button>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function Order() {
 
   return (
     <Container>
-      <div className="bg-white p-10 rounded-2xl mb-10">
+      <div id="order_from" className="bg-white p-10 rounded-2xl mb-10">
         <h2 className="text-3xl font-semibold mb-6">Place Your Order</h2>
 
         <AppForm onSubmit={onSubmit}>

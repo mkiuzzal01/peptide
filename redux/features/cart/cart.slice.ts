@@ -1,66 +1,83 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ICartItem } from "@/redux/types";
 
-interface ICartProduct {
-  id: string;
-  name: string;
-  price: string;
-  quantity: number;
-  image: string | any;
-  weight?: string;
-  packSize?: string | null;
+interface CartState {
+  products: ICartItem[];
 }
 
-interface IInitialState {
-  products: ICartProduct[];
-}
-
-const loadCartFromLocalStorage = (): ICartProduct[] => {
+const loadCart = (): ICartItem[] => {
   if (typeof window === "undefined") return [];
-
   try {
-    const cartData = localStorage.getItem("cart");
-
-    return cartData ? JSON.parse(cartData) : [];
-  } catch (error) {
-    console.error("Failed to load cart:", error);
+    return JSON.parse(localStorage.getItem("cart") || "[]");
+  } catch {
     return [];
   }
 };
 
-const saveCartToLocalStorage = (products: ICartProduct[]) => {
+const saveCart = (data: ICartItem[]) => {
   if (typeof window === "undefined") return;
-
-  try {
-    localStorage.setItem("cart", JSON.stringify(products));
-  } catch (error) {
-    console.error("Failed to save cart:", error);
-  }
+  localStorage.setItem("cart", JSON.stringify(data));
 };
 
-const initialState: IInitialState = {
-  products: loadCartFromLocalStorage(),
+const initialState: CartState = {
+  products: loadCart(),
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<ICartProduct>) => {
-      state.products.push(action.payload);
-
-      saveCartToLocalStorage(state.products);
-    },
-
-    removeCartItem: (state, action: PayloadAction<string>) => {
-      state.products = state.products.filter(
-        (product) => product.id !== action.payload,
+    addToCart: (state, action: PayloadAction<ICartItem>) => {
+      const existing = state.products.find(
+        (p) =>
+          p.id === action.payload.id &&
+          p.selectedSize === action.payload.selectedSize &&
+          p.selectedPack === action.payload.selectedPack,
       );
 
-      saveCartToLocalStorage(state.products);
+      if (existing) {
+        existing.quantity += action.payload.quantity;
+      } else {
+        state.products.push(action.payload);
+      }
+
+      saveCart(state.products);
+    },
+
+    updateCartItem: (
+      state,
+      action: PayloadAction<{
+        id: number;
+        selectedSize: string;
+        selectedPack: string;
+        quantity: number;
+      }>,
+    ) => {
+      const item = state.products.find((p) => p.id === action.payload.id);
+
+      if (item) {
+        item.selectedSize = action.payload.selectedSize;
+        item.selectedPack = action.payload.selectedPack;
+        item.quantity = action.payload.quantity;
+      }
+
+      saveCart(state.products);
+    },
+
+    removeCartItem: (state, action: PayloadAction<number>) => {
+      state.products = state.products.filter((p) => p.id !== action.payload);
+
+      saveCart(state.products);
+    },
+
+    clearCart: (state) => {
+      state.products = [];
+      saveCart(state.products);
     },
   },
 });
 
-export const { addToCart, removeCartItem } = cartSlice.actions;
+export const { addToCart, updateCartItem, removeCartItem, clearCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -37,14 +37,7 @@ export default function Recommanded({ payload }: Props) {
         <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
           {payload?.map((product: any) => (
             <div key={product.id}>
-              <ProductCard
-                id={product?.id}
-                slug={product?.slug}
-                cas={product?.cas_number}
-                name={product?.name}
-                price={product?.price_from}
-                image={product?.thumbnail}
-              />
+              <ProductCard product={product} />
             </div>
           ))}
         </div>

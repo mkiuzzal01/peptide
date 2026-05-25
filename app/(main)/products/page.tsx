@@ -62,15 +62,7 @@ export default async function page({ searchParams }: Props) {
           ) : (
             <div className="grid gap-3 grid-cols-1 lg:grid-cols-3">
               {products?.data?.data?.map((product: any) => (
-                <ProductCard
-                  key={product?.id}
-                  id={product?.id}
-                  slug={product?.slug}
-                  cas={product?.cas_number}
-                  name={product?.name}
-                  price={product?.from_price}
-                  image={product?.thumbnail}
-                />
+                <ProductCard key={product?.id} product={product} />
               ))}
             </div>
           )}

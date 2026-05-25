@@ -5,55 +5,55 @@ import Bag from "../icons/Bag";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cart/cart.slice";
-import { toast } from "react-toastify";
 import prodcutImage from "@/public/products/products.png";
 import Image from "next/image";
+import { IProduct } from "@/redux/types";
+import { toast } from "react-toastify";
 
 interface ProductCardProps {
-  id: number | string;
-  slug: string;
-  cas: string;
-  name: string;
-  price: string;
-  image: string | any;
+  product: IProduct;
 }
 
-export default function ProductCard({
-  id,
-  slug,
-  cas,
-  name,
-  price,
-  image,
-}: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
   const dispatch = useAppDispatch();
-
   const { products } = useAppSelector((state) => state.cart);
 
   const handleAddToCart = () => {
-    const existingProduct = products.find(
-      (product) => product.id === String(id),
+    const defaultVariant = product.variants?.[0];
+
+    if (!defaultVariant) {
+      toast.error("Variant not found");
+      return;
+    }
+
+    const exists = products.find(
+      (p) =>
+        p.id === product.id &&
+        p.selectedSize === defaultVariant.size &&
+        p.selectedPack === defaultVariant.quantity,
     );
 
-    if (existingProduct) {
-      toast.info("Product already added to cart");
-
+    if (exists) {
+      toast.error("Product already added");
       return;
     }
 
     dispatch(
       addToCart({
-        id: String(id),
-        name,
-        price,
-        image,
+        id: product.id,
+        name: product.name,
+        thumbnail: product.thumbnail,
+
         quantity: 1,
-        weight: "1kg",
-        packSize: "1kg",
+
+        selectedSize: defaultVariant.size,
+        selectedPack: defaultVariant.quantity,
+
+        variants: product.variants,
       }),
     );
 
-    toast.success("Product added to cart");
+    toast.success("Added to cart");
   };
 
   return (
@@ -63,16 +63,16 @@ export default function ProductCard({
         {/* Product Info */}
         <div className="text-center space-y-2">
           <p className="text-sm font-medium tracking-wide text-gray-400 uppercase">
-            CAS #: {cas}
+            CAS #: {product?.cas_number}
           </p>
 
-          <h3 className="text-xl font-bold text-gray-900">{name}</h3>
+          <h3 className="text-xl font-bold text-gray-900">{product?.name}</h3>
 
-          <p className="font-normal">From $ {price}</p>
+          <p className="font-normal">From $ {product?.from_price}</p>
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-3">
-          <Link href={`/products/${slug}`}>
+          <Link href={`/products/${product?.slug}`}>
             <Action
               name="View Details"
               title="View Details"
@@ -116,8 +116,8 @@ export default function ProductCard({
       {/* Product Image */}
       <div className="flex items-center justify-center p-3">
         <Image
-          src={image || prodcutImage}
-          alt={name}
+          src={product?.thumbnail || prodcutImage}
+          alt={product?.name || ""}
           width={300}
           height={300}
           className="

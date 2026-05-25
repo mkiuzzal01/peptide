@@ -85,25 +85,39 @@ export default function ProductDetails({ payload }: Props) {
   // -----------------------------
   // CART CHECK
   // -----------------------------
+
   const handleAddToCart = () => {
-    const existingProduct = products.find(
-      (product) => product.id === String(payload?.id),
+    const defaultVariant = payload?.variants?.[0];
+
+    if (!defaultVariant) {
+      toast.error("Variant not found");
+      return;
+    }
+
+    const exists = products.find(
+      (p) =>
+        p.id === payload?.id &&
+        p.selectedSize === defaultVariant.size &&
+        p.selectedPack === defaultVariant.quantity,
     );
 
-    if (existingProduct) {
-      toast.info("Already in cart");
+    if (exists) {
+      toast.error("Product already added");
       return;
     }
 
     dispatch(
       addToCart({
-        id: String(payload?.id),
+        id: payload?.id,
         name: payload?.name,
-        price: String(selectedVariant?.price ?? payload?.price_from),
-        image: selectedVariant?.image || payload?.thumbnail,
-        quantity,
-        weight: selectedVariant?.size || `${selectedSize}mg`,
-        packSize: selectedQuantityOption,
+        thumbnail: payload?.thumbnail,
+
+        quantity: 1,
+
+        selectedSize: defaultVariant.size,
+        selectedPack: defaultVariant.quantity,
+
+        variants: payload.variants,
       }),
     );
 

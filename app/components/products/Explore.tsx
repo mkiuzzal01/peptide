@@ -2,70 +2,17 @@ import Action from "../buttons/Action";
 import ArrowIcon from "../icons/ArrowIcon";
 import Container from "../shared/Container";
 import SectionTitle from "../shared/SectionTitle";
-import image from "@/public/products/products.png";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
+import { IProduct } from "@/redux/types";
 
-const products = [
-  {
-    id: 1,
-    cas: "50-78-2",
-    name: "Oxytocin",
-    price: "$100",
-    image: image,
-  },
-  {
-    id: 2,
-    cas: "58-08-2",
-    name: "Caffeine",
-    price: "$75",
-    image: image,
-  },
-  {
-    id: 3,
-    cas: "60-00-4",
-    name: "EDTA",
-    price: "$120",
-    image: image,
-  },
-  {
-    id: 4,
-    cas: "64-17-5",
-    name: "Ethanol",
-    price: "$90",
-    image: image,
-  },
-  {
-    id: 5,
-    cas: "67-56-1",
-    name: "Methanol",
-    price: "$110",
-    image: image,
-  },
-  {
-    id: 6,
-    cas: "73-78-9",
-    name: "Lidocaine",
-    price: "$140",
-    image: image,
-  },
-  {
-    id: 7,
-    cas: "7440-44-0",
-    name: "Activated Carbon",
-    price: "$60",
-    image: image,
-  },
-  {
-    id: 8,
-    cas: "7664-93-9",
-    name: "Sulfuric Acid",
-    price: "$95",
-    image: image,
-  },
-];
+interface ExploreProps {
+  products: IProduct[];
+}
 
-export default function Explore() {
+export default function Explore({ products }: ExploreProps) {
+  console.log(products);
+
   return (
     <Container>
       <SectionTitle
@@ -100,16 +47,9 @@ export default function Explore() {
       />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-4 py-4">
-        {products.map((product) => (
+        {products?.map((product) => (
           <div key={product.id}>
-            <ProductCard
-              slug={product?.name}
-              id={product.id}
-              cas={product.cas}
-              name={product.name}
-              price={product.price}
-              image={product.image}
-            />
+            <ProductCard product={product} />
           </div>
         ))}
       </div>

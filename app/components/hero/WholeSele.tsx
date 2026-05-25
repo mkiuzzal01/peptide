@@ -46,7 +46,7 @@ export default function WholeSele() {
     "
             />
           </Link>
-          <Link href={"/wholesale"}>
+          <Link href={"#order_from"}>
             <Action
               iconPosition="right"
               name="Request a Order"

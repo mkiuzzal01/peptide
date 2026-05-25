@@ -45,7 +45,7 @@ export default function OrderProcess() {
           <SectionTitle title="Order Process" />
 
           {/* CTA */}
-          <Link href="/contact">
+          <Link href="#order_from">
             <Action
               iconPosition="right"
               name="Request an Order"

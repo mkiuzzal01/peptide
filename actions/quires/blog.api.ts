@@ -2,8 +2,8 @@
 import { api } from "../TApi";
 
 export const getBlogs = () =>
-  api.get<any>(`/blogs`, {
-    tags: ["blogs"],
+  api.get<any>(`/blog`, {
+    tags: ["blog"],
     revalidate: 60,
   });
 

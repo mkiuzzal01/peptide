@@ -1,16 +1,16 @@
 import Container from "@/app/components/shared/Container";
 import CheckOut from "@/app/components/form/CheckOut";
-import OrderSummery from "../cart/__components/OrderSummery";
+import CheckOutSummery from "./CheckOutSummery";
 
 export default function page() {
   return (
     <Container>
-      <div className="flex flex-col lg:flex-row gap-10 py-5">
-        <div className="flex-1">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 py-10">
+        <div className="lg:col-span-2">
           <CheckOut />
         </div>
-        <div className="flex-1">
-          <OrderSummery />
+        <div className="col-span-1">
+          <CheckOutSummery />
         </div>
       </div>
     </Container>

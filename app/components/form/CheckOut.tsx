@@ -5,6 +5,7 @@ import AppForm from "./AppForm";
 import TextInput from "./input-fields/TextInput";
 import { Textarea } from "@/components/ui/textarea";
 import SubmitButton from "../buttons/SubmitButton";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function CheckOut() {
   const handleSubmit = (data: FieldValues) => {
@@ -12,7 +13,7 @@ export default function CheckOut() {
   };
 
   return (
-    <div className="bg-white rounded-2xl mb-10">
+    <div className="bg-white rounded-2xl p-5">
       <div className="container p-5">
         <h2 className="text-3xl font-semibold mb-6">
           Shipping & Delivery Information
@@ -46,10 +47,13 @@ export default function CheckOut() {
               />
             </div>
           </div>
-          <div className="max-w-xs m-auto  mt-6">
-            <SubmitButton text="Submit" className="rounded-full h-12" />
-          </div>
         </AppForm>
+        <div className="flex items-center gap-2 py-2">
+          <Checkbox />
+          <label className="text-xs text-gray-700" htmlFor="terms">
+            I agree to Tech Takes Terms of Service and Privacy Policy.
+          </label>
+        </div>
       </div>
     </div>
   );

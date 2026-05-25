@@ -8,8 +8,8 @@ export default function ProductList() {
   const { products } = useAppSelector((state) => state.cart);
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-6 pb-10">
-      <div className="flex-1 space-y-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="col-span-2 space-y-4 pb-4">
         {products?.length > 0 ? (
           products?.map((product: any, idx: number) => (
             <CartProductCard key={`${product?.id}-${idx}`} item={product} />
@@ -21,7 +21,9 @@ export default function ProductList() {
           />
         )}
       </div>
-      <OrderSummery />
+      <div className="sticky top-20 h-fit">
+        <OrderSummery />
+      </div>
     </div>
   );
 }

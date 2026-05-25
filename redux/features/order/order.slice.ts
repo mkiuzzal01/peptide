@@ -1,5 +1,16 @@
+// order.slice.ts
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { ICartItem } from "@/redux/types";
+
+interface CouponState {
+  code: string;
+  type: string;
+  value: number;
+  discount: number;
+  valid: boolean;
+}
 
 interface OrderState {
   subTotal: number;
@@ -7,7 +18,8 @@ interface OrderState {
   deliveryFee: number;
   discount: number;
   total: number;
-  coupon: string;
+
+  coupon: CouponState | null;
 }
 
 const initialState: OrderState = {
@@ -16,24 +28,32 @@ const initialState: OrderState = {
   deliveryFee: 0,
   discount: 0,
   total: 0,
-  coupon: "",
+
+  coupon: null,
 };
 
 const orderSlice = createSlice({
   name: "order",
   initialState,
+
   reducers: {
-    setCoupon: (state, action: PayloadAction<string>) => {
+    applyCoupon: (state, action: PayloadAction<CouponState>) => {
       state.coupon = action.payload;
+    },
+
+    removeCoupon: (state) => {
+      state.coupon = null;
     },
 
     calculateSummary: (state, action: PayloadAction<ICartItem[]>) => {
       const products = action.payload;
 
+      // SUBTOTAL
       const subTotal = products.reduce((acc, item) => {
         const variant = item.variants.find(
-          (v) =>
-            v.size === item.selectedSize && v.quantity === item.selectedPack,
+          (variant) =>
+            variant.size === item.selectedSize &&
+            variant.quantity === item.selectedPack,
         );
 
         if (!variant) return acc;
@@ -41,15 +61,20 @@ const orderSlice = createSlice({
         return acc + variant.price * item.quantity;
       }, 0);
 
+      // VAT
       const vat = subTotal * 0.05;
+
+      // DELIVERY
       const deliveryFee = subTotal > 500 ? 0 : 25;
 
+      // DISCOUNT
       let discount = 0;
 
-      if (state.coupon.toLowerCase() === "save10") {
-        discount = subTotal * 0.1;
+      if (state.coupon?.valid) {
+        discount = state.coupon.discount;
       }
 
+      // TOTAL
       const total = subTotal + vat + deliveryFee - discount;
 
       state.subTotal = subTotal;
@@ -61,5 +86,7 @@ const orderSlice = createSlice({
   },
 });
 
-export const { setCoupon, calculateSummary } = orderSlice.actions;
+export const { applyCoupon, removeCoupon, calculateSummary } =
+  orderSlice.actions;
+
 export default orderSlice.reducer;

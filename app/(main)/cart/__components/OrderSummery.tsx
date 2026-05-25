@@ -1,27 +1,77 @@
 "use client";
+
 import { useEffect, useState } from "react";
+
 import Link from "next/link";
+
+import { toast } from "react-toastify";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+
 import {
+  applyCoupon,
   calculateSummary,
-  setCoupon,
+  removeCoupon,
 } from "@/redux/features/order/order.slice";
+
+import { useApplyCouponMutation } from "@/redux/features/order/order.api";
 
 export default function OrderSummery() {
   const dispatch = useAppDispatch();
+
   const [couponInput, setCouponInput] = useState("");
 
-  const { products } = useAppSelector((state) => state.cart);
-  const { subTotal, vat, deliveryFee, discount, total } = useAppSelector(
-    (state) => state.order,
-  );
+  const [applyCouponApi, { isLoading }] = useApplyCouponMutation();
 
+  const { products } = useAppSelector((state) => state.cart);
+
+  const { subTotal, vat, deliveryFee, discount, total, coupon } =
+    useAppSelector((state) => state.order);
+
+  // CALCULATE SUMMARY
   useEffect(() => {
     dispatch(calculateSummary(products));
-  }, [products, couponInput]);
+  }, [dispatch, products, coupon]);
 
-  const handleApplyCoupon = () => {
-    dispatch(setCoupon(couponInput));
+  // APPLY COUPON
+  const handleApplyCoupon = async () => {
+    if (!couponInput.trim()) {
+      toast.error("Please enter coupon code");
+      return;
+    }
+
+    try {
+      const response = await applyCouponApi({
+        code: couponInput,
+        subtotal: subTotal,
+      }).unwrap();
+
+      if (response?.valid) {
+        dispatch(
+          applyCoupon({
+            code: response.code,
+            type: response.type,
+            value: Number(response.value),
+            discount: response.discount,
+            valid: response.valid,
+          }),
+        );
+
+        dispatch(calculateSummary(products));
+
+        toast.success(response.message || "Coupon applied successfully");
+
+        setCouponInput("");
+      } else {
+        dispatch(removeCoupon());
+
+        toast.error(response?.message || "Invalid coupon");
+      }
+    } catch (error: any) {
+      dispatch(removeCoupon());
+
+      toast.error(error?.data?.message || "Failed to apply coupon");
+    }
   };
 
   return (
@@ -69,43 +119,72 @@ export default function OrderSummery() {
       </div>
 
       {/* COUPON */}
-      <div className="mt-6 flex gap-2">
-        <input
-          type="text"
-          placeholder="Promo coupon (SAVE10)"
-          value={couponInput}
-          onChange={(e) => setCouponInput(e.target.value)}
-          className="
-            w-full
-            rounded-xl
-            border
-            border-gray-200
-            px-4
-            py-3
-            text-sm
-            outline-none
-            focus:border-blue-500
-          "
-        />
+      {!coupon?.valid && (
+        <div className="mt-6 flex gap-2">
+          <input
+            type="text"
+            placeholder="Promo coupon"
+            value={couponInput}
+            onChange={(e) => setCouponInput(e.target.value)}
+            className="
+              w-full
+              rounded-xl
+              border
+              border-gray-200
+              px-4
+              py-3
+              text-sm
+              outline-none
+              focus:border-blue-500
+            "
+          />
 
-        <button
-          onClick={handleApplyCoupon}
-          className="
-            rounded-xl
-            border
-            border-blue-600
-            px-4
-            py-3
-            text-sm
-            font-medium
-            text-blue-600
-            hover:bg-blue-50
-            transition
-          "
-        >
-          Apply
-        </button>
-      </div>
+          <button
+            onClick={handleApplyCoupon}
+            disabled={isLoading}
+            className="
+              rounded-xl
+              border
+              border-blue-600
+              px-4
+              py-3
+              text-sm
+              font-medium
+              text-blue-600
+              hover:bg-blue-50
+              transition
+              disabled:opacity-50
+            "
+          >
+            {isLoading ? "Applying..." : "Apply"}
+          </button>
+        </div>
+      )}
+
+      {/* APPLIED COUPON */}
+      {coupon?.valid && (
+        <div className="mt-5 rounded-xl border border-green-200 bg-green-50 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold text-green-700">
+                Coupon Applied
+              </p>
+
+              <p className="text-xs text-green-600 mt-1">{coupon.code}</p>
+            </div>
+
+            <button
+              onClick={() => {
+                dispatch(removeCoupon());
+                dispatch(calculateSummary(products));
+              }}
+              className="text-sm text-red-500 hover:underline"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* CHECKOUT */}
       <Link href="/checkout">

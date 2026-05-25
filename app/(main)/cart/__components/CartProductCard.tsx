@@ -77,7 +77,7 @@ export default function CartProductCard({ item }: Props) {
       {/* REMOVE BUTTON */}
       <button
         onClick={() => dispatch(removeCartItem(id))}
-        className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition"
+        className="absolute top-3 right-3 text-red-500 hover:bg-gray-100 p-2 rounded-full"
       >
         <X size={16} />
       </button>

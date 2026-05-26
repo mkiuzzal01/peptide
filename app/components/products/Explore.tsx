@@ -11,8 +11,6 @@ interface ExploreProps {
 }
 
 export default function Explore({ products }: ExploreProps) {
-  console.log(products);
-
   return (
     <Container>
       <SectionTitle

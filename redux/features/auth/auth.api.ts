@@ -64,6 +64,15 @@ const authSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
+
+    socialLogin: builder.mutation({
+      query: (body) => ({
+        url: "/social-login",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["auth"],
+    }),
   }),
 });
 
@@ -75,4 +84,5 @@ export const {
   useResetPasswordMutation,
   useResendOTPMutation,
   useForgotVerifyOTPMutation,
+  useSocialLoginMutation,
 } = authSlice;

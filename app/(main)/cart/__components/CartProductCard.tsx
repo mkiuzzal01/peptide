@@ -28,6 +28,7 @@ export default function CartProductCard({ item }: Props) {
     quantity,
     selectedPack,
     selectedSize,
+    selectedVariantId,
   } = item;
 
   // UNIQUE SIZES
@@ -35,7 +36,9 @@ export default function CartProductCard({ item }: Props) {
 
   // LOCAL STATES
   const [currentSize, setCurrentSize] = useState(selectedSize);
+
   const [currentPack, setCurrentPack] = useState(selectedPack);
+
   const [qty, setQty] = useState(quantity);
 
   // FILTERED VARIANTS
@@ -53,7 +56,7 @@ export default function CartProductCard({ item }: Props) {
     if (!exists && filteredVariants.length > 0) {
       setCurrentPack(filteredVariants[0].quantity);
     }
-  }, [currentSize]);
+  }, [filteredVariants, currentPack]);
 
   // SELECTED VARIANT
   const selectedVariant: IProductVariant | undefined = variants.find(
@@ -62,21 +65,40 @@ export default function CartProductCard({ item }: Props) {
 
   // UPDATE REDUX
   useEffect(() => {
+    if (!selectedVariant?.id) return;
+
     dispatch(
       updateCartItem({
         id,
+        oldVariantId: selectedVariantId,
         quantity: qty,
         selectedSize: currentSize,
         selectedPack: currentPack,
+        selectedVariantId: selectedVariant.id,
       }),
     );
-  }, [dispatch, id, qty, currentSize, currentPack]);
+  }, [
+    dispatch,
+    id,
+    qty,
+    currentSize,
+    currentPack,
+    selectedVariant,
+    selectedVariantId,
+  ]);
 
   return (
     <div className="relative flex flex-col lg:flex-row gap-5 bg-white border rounded-2xl p-4 shadow-sm">
       {/* REMOVE BUTTON */}
       <button
-        onClick={() => dispatch(removeCartItem(id))}
+        onClick={() =>
+          dispatch(
+            removeCartItem({
+              id,
+              variantId: selectedVariantId,
+            }),
+          )
+        }
         className="absolute top-3 right-3 text-red-500 hover:bg-gray-100 p-2 rounded-full"
       >
         <X size={16} />

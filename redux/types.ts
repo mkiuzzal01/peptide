@@ -26,5 +26,6 @@ export interface ICartItem {
   quantity: number;
   selectedSize: string;
   selectedPack: string;
+  selectedVariantId: number;
   variants: IProductVariant[];
 }

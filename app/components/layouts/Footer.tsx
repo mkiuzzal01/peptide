@@ -7,7 +7,6 @@ import Facebook from "../icons/Facebook";
 import LinkedIn from "../icons/LinkedIn";
 import Twitter from "../icons/Twitter";
 import { useSubscribeMutation } from "@/redux/features/subscribe/subscribe.api";
-
 import Container from "../shared/Container";
 import { footerLinks } from "./navLinks";
 import Image from "next/image";
@@ -15,11 +14,17 @@ import Image from "next/image";
 interface Props {
   systemInfo: any;
   socialLinks: any;
+  proofOfManufacturing: any;
 }
 
-export default function Footer({ systemInfo, socialLinks }: Props) {
+export default function Footer({
+  systemInfo,
+  socialLinks,
+  proofOfManufacturing,
+}: Props) {
   const info = systemInfo?.data;
   const socialData = socialLinks?.data;
+  const proofData = proofOfManufacturing?.data;
 
   const [subscribe, { isLoading }] = useSubscribeMutation();
   const [email, setEmail] = useState("");
@@ -46,15 +51,15 @@ export default function Footer({ systemInfo, socialLinks }: Props) {
 
   const socials = [
     {
-      icon: Twitter,
+      icon: <Twitter />,
       url: socialData?.twitter_link,
     },
     {
-      icon: Facebook,
+      icon: <Facebook />,
       url: socialData?.facebook_link,
     },
     {
-      icon: LinkedIn,
+      icon: <LinkedIn />,
       url: socialData?.linkedin_link,
     },
   ];
@@ -79,20 +84,27 @@ export default function Footer({ systemInfo, socialLinks }: Props) {
 
             {/* SOCIAL */}
             <div className="mt-2 flex items-center gap-3">
-              {[Twitter, Facebook, LinkedIn].map((Icon, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className="
-                    flex h-9 w-9 items-center justify-center
-                    rounded-full bg-[#E6E9ED]
-                    transition-all duration-200
-                    hover:bg-[#037FFF] hover:text-white
-                  "
-                >
-                  <Icon />
-                </button>
-              ))}
+              {socials.map((item, i) => {
+                const Icon = item.icon;
+
+                return (
+                  <a
+                    key={i}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+          group flex h-9 w-9 items-center justify-center
+          rounded-full bg-[#E6E9ED]
+          text-gray-600
+          transition-all duration-200
+          hover:bg-[#037FFF] hover:text-white
+        "
+                  >
+                    {Icon}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -154,6 +166,7 @@ export default function Footer({ systemInfo, socialLinks }: Props) {
             </form>
 
             {/* FOOTER LINKS */}
+            {/* FOOTER LINKS */}
             <div className="flex flex-wrap items-center gap-3">
               {footerLinks.map((link, i) => (
                 <Link
@@ -164,6 +177,17 @@ export default function Footer({ systemInfo, socialLinks }: Props) {
                   {link.title}
                 </Link>
               ))}
+
+              {/* MANUFACTURING PROOF LINK (NEW) */}
+              {proofData && (
+                <a
+                  href={`${proofData?.manufacturing_proof}`}
+                  target="_blank"
+                  className="text-sm text-[#637381] transition hover:text-[#037FFF]"
+                >
+                  Manufacturing Proof
+                </a>
+              )}
             </div>
           </div>
         </div>

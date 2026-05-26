@@ -11,11 +11,13 @@ import logo from "@/public/auth/sign-in.jpg";
 import Link from "next/link";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/auth.slice";
 
 export default function Signin() {
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect");
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
@@ -42,7 +44,11 @@ export default function Signin() {
 
         reset();
 
-        router.push("/");
+        if (redirectUrl) {
+          router.replace(redirectUrl);
+        } else {
+          router.push("/");
+        }
       }
     } catch (error) {
       if (error instanceof Error) {

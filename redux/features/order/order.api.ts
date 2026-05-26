@@ -9,7 +9,15 @@ export const orderApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    placeOrder: builder.mutation<any, any>({
+      query: (data) => ({
+        url: `/checkout`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useApplyCouponMutation } = orderApi;
+export const { useApplyCouponMutation, usePlaceOrderMutation } = orderApi;

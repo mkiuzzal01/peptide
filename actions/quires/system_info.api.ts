@@ -11,3 +11,9 @@ export const getSocialLinks = () =>
     tags: ["social-links"],
     revalidate: 60,
   });
+
+export const getProofOfManufacturing = () =>
+  api.get<any>(`/proof-of-manufacturing`, {
+    tags: ["proof-of-manufacturing"],
+    revalidate: 60,
+  });

@@ -38,18 +38,22 @@ export default function ProductCard({ product }: ProductCardProps) {
       return;
     }
 
+    const variant = product.variants.find(
+      (v) =>
+        v.size === defaultVariant.size &&
+        v.quantity === defaultVariant.quantity,
+    );
+
     dispatch(
       addToCart({
         id: product.id,
         name: product.name,
-        thumbnail: product.thumbnail,
-
+        thumbnail: product.thumbnail || "",
         quantity: 1,
-
+        selectedVariantId: variant?.id || 0,
         selectedSize: defaultVariant.size,
         selectedPack: defaultVariant.quantity,
-
-        variants: product.variants,
+        variants: product.variants || [],
       }),
     );
 

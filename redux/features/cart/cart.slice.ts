@@ -32,7 +32,8 @@ const cartSlice = createSlice({
         (p) =>
           p.id === action.payload.id &&
           p.selectedSize === action.payload.selectedSize &&
-          p.selectedPack === action.payload.selectedPack,
+          p.selectedPack === action.payload.selectedPack &&
+          p.selectedVariantId === action.payload.selectedVariantId,
       );
 
       if (existing) {
@@ -48,24 +49,43 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<{
         id: number;
+        oldVariantId: number;
         selectedSize: string;
         selectedPack: string;
         quantity: number;
+        selectedVariantId: number;
       }>,
     ) => {
-      const item = state.products.find((p) => p.id === action.payload.id);
+      const item = state.products.find(
+        (p) =>
+          p.id === action.payload.id &&
+          p.selectedVariantId === action.payload.oldVariantId,
+      );
 
       if (item) {
         item.selectedSize = action.payload.selectedSize;
         item.selectedPack = action.payload.selectedPack;
         item.quantity = action.payload.quantity;
+        item.selectedVariantId = action.payload.selectedVariantId;
       }
 
       saveCart(state.products);
     },
 
-    removeCartItem: (state, action: PayloadAction<number>) => {
-      state.products = state.products.filter((p) => p.id !== action.payload);
+    removeCartItem: (
+      state,
+      action: PayloadAction<{
+        id: number;
+        variantId: number;
+      }>,
+    ) => {
+      state.products = state.products.filter(
+        (p) =>
+          !(
+            p.id === action.payload.id &&
+            p.selectedVariantId === action.payload.variantId
+          ),
+      );
 
       saveCart(state.products);
     },
@@ -77,7 +97,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, updateCartItem, removeCartItem, clearCart } =
+export const { addToCart, removeCartItem, updateCartItem, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

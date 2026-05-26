@@ -1,15 +1,49 @@
 "use client";
-
 import { FieldValues } from "react-hook-form";
 import AppForm from "./AppForm";
 import TextInput from "./input-fields/TextInput";
+import TextArea from "./input-fields/TextArea";
 import { Checkbox } from "@/components/ui/checkbox";
 import SubmitButton from "../buttons/SubmitButton";
-import TextArea from "./input-fields/TextArea";
+import { usePlaceOrderMutation } from "@/redux/features/order/order.api";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { toast } from "react-toastify";
+import { usePathname, useRouter } from "next/navigation";
+import { clearCart } from "@/redux/features/cart/cart.slice";
 
 export default function CheckOut() {
-  const handleSubmit = (data: FieldValues) => {
-    console.log(data);
+  const pathname = usePathname();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { products } = useAppSelector((state) => state.cart);
+  const { coupon } = useAppSelector((state) => state.order);
+
+  const [placeOrder, { isLoading }] = usePlaceOrderMutation();
+
+  const handleSubmit = async (data: FieldValues, reset: () => void) => {
+    try {
+      const items = products.map((item) => ({
+        variant_id: Number(item.selectedVariantId),
+        quantity: Number(item.quantity),
+      }));
+
+      const payload = {
+        ...data,
+        coupon: coupon?.code || null,
+        items,
+      };
+
+      const res = await placeOrder(payload).unwrap();
+      toast.success(res?.message || "Order placed successfully");
+      reset();
+      dispatch(clearCart());
+      router.replace("/products");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to place order");
+      if (error?.data?.message === "Unauthenticated.") {
+        router.replace(`/sign-in?redirect=${pathname}`);
+      }
+    }
   };
 
   return (
@@ -43,7 +77,6 @@ export default function CheckOut() {
               required
             />
 
-            {/* ADDRESS */}
             <div className="col-span-full">
               <TextArea
                 label="Address"
@@ -53,7 +86,6 @@ export default function CheckOut() {
               />
             </div>
 
-            {/* TERMS */}
             <div className="flex items-center gap-2 py-2">
               <Checkbox id="terms" required />
 
@@ -65,7 +97,7 @@ export default function CheckOut() {
 
           <div className="flex justify-end mt-5">
             <SubmitButton
-              text="Proceed to Checkout"
+              text={isLoading ? "Placing Order..." : "Proceed to Checkout"}
               className="h-12 w-full lg:w-auto rounded-md"
             />
           </div>

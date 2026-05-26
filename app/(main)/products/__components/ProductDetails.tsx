@@ -87,18 +87,16 @@ export default function ProductDetails({ payload }: Props) {
   // -----------------------------
 
   const handleAddToCart = () => {
-    const defaultVariant = payload?.variants?.[0];
-
-    if (!defaultVariant) {
-      toast.error("Variant not found");
+    if (!selectedVariant) {
+      toast.error("Please select valid variant");
       return;
     }
 
     const exists = products.find(
       (p) =>
         p.id === payload?.id &&
-        p.selectedSize === defaultVariant.size &&
-        p.selectedPack === defaultVariant.quantity,
+        p.selectedSize === selectedVariant.size &&
+        p.selectedPack === selectedVariant.quantity,
     );
 
     if (exists) {
@@ -111,11 +109,11 @@ export default function ProductDetails({ payload }: Props) {
         id: payload?.id,
         name: payload?.name,
         thumbnail: payload?.thumbnail,
+        quantity,
+        selectedSize: selectedVariant.size,
+        selectedPack: selectedVariant.quantity,
 
-        quantity: 1,
-
-        selectedSize: defaultVariant.size,
-        selectedPack: defaultVariant.quantity,
+        selectedVariantId: selectedVariant.id,
 
         variants: payload.variants,
       }),

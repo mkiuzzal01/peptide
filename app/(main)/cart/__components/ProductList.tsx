@@ -16,6 +16,8 @@ export default function ProductList() {
           ))
         ) : (
           <NotFoundMessage
+            buttonLink="/products"
+            buttonText="Shop Now"
             title="No product added yet"
             message="Please add products to your cart"
           />

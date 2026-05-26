@@ -5,42 +5,38 @@ type TNavLinks = {
 
 export const navigationLinks: TNavLinks[] = [
   {
-    title: 'Home',
-    href: '/',
+    title: "Home",
+    href: "/",
   },
   {
-    title: 'Products',
-    href: '/products',
+    title: "Products",
+    href: "/products",
   },
   {
-    title: 'Blog',
-    href: '/blog',
+    title: "Blog",
+    href: "/blog",
   },
   {
-    title: 'COA',
-    href: '/coa',
+    title: "COA",
+    href: "/coa",
   },
   {
-    title: 'Contact us',
-    href: '/contact-us',
+    title: "Contact us",
+    href: "/contact-us",
   },
   {
-    title: 'Wholesale',
-    href: '/wholesale',
+    title: "Wholesale",
+    href: "/wholesale",
   },
 ];
 
 export const footerLinks: TNavLinks[] = [
   {
-    title: 'Privacy Policy',
-    href: '/privacy',
+    title: "Privacy Policy",
+    href: "/privacy",
   },
   {
-    title: 'Terms of Service',
-    href: '/terms',
-  },
-  {
-    title: 'Proof of Manufacturing',
-    href: '/proof',
+    title: "Terms of Service",
+    href: "/terms",
   },
 ];

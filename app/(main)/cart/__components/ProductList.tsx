@@ -8,7 +8,7 @@ export default function ProductList() {
   const { products } = useAppSelector((state) => state.cart);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-4">
       <div className="col-span-2 space-y-4 pb-4">
         {products?.length > 0 ? (
           products?.map((product: any, idx: number) => (

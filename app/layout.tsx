@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Public_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/redux/provider";
+import { getSystemInfo } from "@/actions/quires/system_info.api";
+import FaviconProvider from "./components/provider/FaviconProvider";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -20,17 +22,19 @@ export const metadata: Metadata = {
   description: "For your digital solutions",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const systemInfo = await getSystemInfo();
   return (
     <html
       lang="en"
       className={`${publicSans.variable} ${poppins.className} h-full antialiased`}
     >
       <body>
+        <FaviconProvider systemInfo={systemInfo} />
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>

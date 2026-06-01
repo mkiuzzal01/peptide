@@ -2,24 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-
 import { Menu, X } from "lucide-react";
-
 import Action from "../buttons/Action";
 import Bag from "../icons/Bag";
 import Container from "../shared/Container";
-
 import { navigationLinks } from "./navLinks";
-
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-
 import { logout } from "@/redux/features/auth/auth.slice";
-
 import { toast } from "react-toastify";
-
 import { persistor } from "@/redux/store";
 
 interface Props {
@@ -53,18 +45,18 @@ export default function Navbar({ systemInfo }: Props) {
         {/* LOGO */}
         <Link href="/" className="shrink-0">
           <div className="flex items-center gap-2">
-            <div className="relative h-10 w-10">
+            <div className="relative h-10 w-[200px]">
               <Image
-                src={"/" + info?.logo || info?.favicon || "/logo.png"}
+                src={info?.logo_full_url || info?.favicon_full_url}
                 alt="logo"
                 fill
                 className="object-contain"
               />
             </div>
 
-            <p className="text-base md:text-lg font-semibold truncate max-w-[140px] md:max-w-full">
+            {/* <p className="text-base md:text-lg font-semibold truncate max-w-[140px] md:max-w-full">
               {info?.title}
-            </p>
+            </p> */}
           </div>
         </Link>
 

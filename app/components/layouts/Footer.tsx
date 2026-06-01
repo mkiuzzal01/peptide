@@ -72,15 +72,12 @@ export default function Footer({
           <div className="flex flex-col gap-4">
             {/* <Logo /> */}
             <Image
-              src={"/" + info?.logo || info?.favicon || "/logo.png"}
+              src={info?.logo_full_url || info?.favicon_full_url}
               alt="logo"
-              width={100}
-              height={100}
+              width={200}
+              height={200}
               className="object-contain"
             />
-            <h2 className="text-2xl font-semibold leading-snug text-gray-900">
-              {info?.title}
-            </h2>
 
             {/* SOCIAL */}
             <div className="mt-2 flex items-center gap-3">

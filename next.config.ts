@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "ayevto1.thewarriors.team",
       },
+      {
+        protocol: "https",
+        hostname: "api.peptidelabsusa.com",
+      },
     ],
   },
 };

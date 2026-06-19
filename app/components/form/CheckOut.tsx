@@ -36,7 +36,7 @@ export default function CheckOut() {
 
       const res = await placeOrder(payload).unwrap();
 
-      toast.success(res?.message || "Order placed successfully");
+      // toast.success(res?.message || "Order placed successfully");
       reset();
       dispatch(clearCart());
       router.replace(res?.data?.checkout_url);

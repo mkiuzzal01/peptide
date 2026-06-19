@@ -39,7 +39,7 @@ export default function CheckOut() {
       toast.success(res?.message || "Order placed successfully");
       reset();
       dispatch(clearCart());
-      router.replace("/products");
+      router.replace(res?.data?.checkout_url);
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to place order");
       if (error?.data?.message === "Unauthenticated.") {

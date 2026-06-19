@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toast } from "react-toastify";
 import { usePathname, useRouter } from "next/navigation";
 import { clearCart } from "@/redux/features/cart/cart.slice";
+import Link from "next/link";
 
 export default function CheckOut() {
   const pathname = usePathname();
@@ -34,6 +35,7 @@ export default function CheckOut() {
       };
 
       const res = await placeOrder(payload).unwrap();
+
       toast.success(res?.message || "Order placed successfully");
       reset();
       dispatch(clearCart());
@@ -90,7 +92,14 @@ export default function CheckOut() {
               <Checkbox id="terms" required />
 
               <label htmlFor="terms" className="text-xs text-gray-700">
-                I agree to Tech Takes Terms of Service and Privacy Policy.
+                I agree to Tech Takes{" "}
+                <Link href="/terms" className="text-primary">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy" className="text-primary">
+                  Privacy Policy
+                </Link>
               </label>
             </div>
           </div>

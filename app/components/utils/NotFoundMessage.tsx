@@ -15,7 +15,7 @@ export default function NotFoundMessage({
   buttonLink = "/",
 }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-16 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-16 my-8 text-center">
       <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-sm">
         <SearchX className="h-10 w-10 text-gray-500" />
       </div>

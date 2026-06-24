@@ -18,7 +18,7 @@ export default function RecentBlog({ payload }: Props) {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-8">
-        {payload?.map((blog: any) => (
+        {payload?.data?.map((blog: any) => (
           <BlogCard
             key={blog?.id}
             slug={blog?.slug}

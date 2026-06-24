@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState, useTransition, useCallback, useRef } from "react";
+import { useEffect, useState, useTransition, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+// Define your defaults here for easier maintenance
+const DEFAULT_MIN = 0;
+const DEFAULT_MAX = 500;
 
 export default function SearchProduct() {
   const router = useRouter();
@@ -16,10 +20,10 @@ export default function SearchProduct() {
 
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [minPrice, setMinPrice] = useState(
-    Number(searchParams.get("min_price")) || 20,
+    Number(searchParams.get("min_price")) || DEFAULT_MIN,
   );
   const [maxPrice, setMaxPrice] = useState(
-    Number(searchParams.get("max_price")) || 500,
+    Number(searchParams.get("max_price")) || DEFAULT_MAX,
   );
   const [sort, setSort] = useState(searchParams.get("sort_by") || "");
 
@@ -31,11 +35,16 @@ export default function SearchProduct() {
 
     let min = minPrice;
     let max = maxPrice;
-
     if (min > max) [min, max] = [max, min];
 
-    params.set("min_price", String(min));
-    params.set("max_price", String(max));
+    // Only include price query params if they differ from default values
+    if (min === DEFAULT_MIN && max === DEFAULT_MAX) {
+      params.delete("min_price");
+      params.delete("max_price");
+    } else {
+      params.set("min_price", String(min));
+      params.set("max_price", String(max));
+    }
 
     if (sort) params.set("sort_by", sort);
     else params.delete("sort_by");
@@ -43,7 +52,7 @@ export default function SearchProduct() {
     return params;
   };
 
-  // 🔥 SINGLE CONTROLLED EFFECT (NO LOOP)
+  // SINGLE CONTROLLED EFFECT (NO LOOP)
   useEffect(() => {
     if (lockRef.current) return;
 
@@ -100,8 +109,8 @@ export default function SearchProduct() {
 
         <Input
           type="range"
-          min={20}
-          max={500}
+          min={DEFAULT_MIN}
+          max={DEFAULT_MAX}
           value={maxPrice}
           onChange={(e) => setMaxPrice(Number(e.target.value))}
         />

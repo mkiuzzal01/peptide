@@ -19,16 +19,18 @@ export default function HeaderCard({
   link,
 }: Props) {
   return (
-    <Container>
-      <div className="flex rounded-xl p-6 bg-white">
-        <div className="space-y-3 flex-1">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-            {title}
-          </h2>
+    <div>
+      <div className="flex rounded-xl p-6 bg-white lg:h-56">
+        <div className="space-y-3 flex-1 flex flex-col justify-between">
+          <div className="space-y-2">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">
+              {title}
+            </h2>
 
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            {description}
-          </p>
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              {description}
+            </p>
+          </div>
 
           <Link href={link!}>
             <Action
@@ -57,6 +59,6 @@ export default function HeaderCard({
           </div>
         )}
       </div>
-    </Container>
+    </div>
   );
 }

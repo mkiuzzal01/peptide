@@ -13,14 +13,21 @@ import Link from "next/link";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignUp() {
   const router = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
+  const [terms, setTerms] = useState(false);
+  const [age, setAge] = useState(false);
 
   const onSubmit = async (values: FieldValues, reset: () => void) => {
     try {
-      const res = await register(values).unwrap();
+      const res = await register({
+        ...values,
+        is_terms_privacy_accepted: terms,
+        is_age_verified: age,
+      }).unwrap();
 
       if (res?.message) {
         toast.info(res?.message);
@@ -115,15 +122,44 @@ export default function SignUp() {
                   placeholder="Enter confirm password"
                 />
 
-                <div className="flex items-center gap-2 py-2">
-                  <Checkbox />
-                  <label className="text-xs text-gray-700" htmlFor="terms">
-                    I agree to Tech Takes Terms of Service and Privacy Policy.
-                  </label>
+                <div className="py-2 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      checked={terms}
+                      onCheckedChange={(value) => setTerms(value as boolean)}
+                    />
+                    <label className="text-xs text-gray-700" htmlFor="terms">
+                      I agree to Tech Takes{" "}
+                      <Link
+                        href="/terms"
+                        className="text-primary font-semibold"
+                      >
+                        Terms of Service
+                      </Link>{" "}
+                      and{" "}
+                      <Link
+                        href="/privacy"
+                        className="text-primary font-semibold"
+                      >
+                        Privacy Policy
+                      </Link>
+                      .
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      checked={age}
+                      onCheckedChange={(value) => setAge(value as boolean)}
+                    />
+                    <label className="text-xs text-gray-700" htmlFor="terms">
+                      I confirm that I am 18 years of age or older.
+                    </label>
+                  </div>
                 </div>
 
                 {/* SUBMIT */}
                 <SubmitButton
+                  disabled={!terms || !age}
                   text="Sign Up"
                   className="h-12 rounded-full"
                   loading={isLoading}

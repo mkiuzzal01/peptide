@@ -191,7 +191,7 @@ export default function CartProductCard({ item }: Props) {
           {/* PRICE */}
           <div>
             <p className="text-2xl font-bold text-gray-900">
-              €{" "}
+              ${" "}
               {selectedVariant
                 ? (selectedVariant.price * qty).toFixed(2)
                 : "0.00"}

@@ -7,23 +7,23 @@ import Container from "../shared/Container";
 const header = [
   {
     title: "High-Purity Peptides",
-    description: "Best Peptides for Research",
-    buttonTitle: "Learn More",
-    href: "/blog",
+    description: "Analytically Tested",
+    buttonTitle: "View COAs",
+    href: "/coa",
     image: <Image alt="App Store" height={300} width={200} src={Object1} />,
   },
   {
-    title: "High-Purity Peptides",
-    description: "Best Peptides for Research",
-    buttonTitle: "Learn More",
-    href: "/blog",
+    title: "Shop All Peptides",
+    description: "The Latest in Peptide Science",
+    buttonTitle: "View All",
+    href: "/products",
     image: <Image alt="App Store" height={300} width={200} src={MedicineBox} />,
   },
   {
-    title: "High-Purity Peptides",
+    title: "Learn Articles",
     description: "Best Peptides for Research",
-    buttonTitle: "View COAs",
-    href: "/coa",
+    buttonTitle: "Learn More",
+    href: "/blog",
     image: <Image alt="App Store" height={300} width={200} src={MedicineBox} />,
   },
 ];

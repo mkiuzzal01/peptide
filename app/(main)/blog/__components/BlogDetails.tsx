@@ -1,11 +1,13 @@
 import Image from "next/image";
 import blog from "@/public/blog/Frame 2147228873.png";
+import parse from "html-react-parser";
 
 interface Props {
   payload: any;
 }
 
 export default function BlogDetails({ payload }: Props) {
+  console.log(parse(payload?.content));
   return (
     <div className="py-4">
       <div className="space-y-6 text-center">
@@ -32,33 +34,8 @@ export default function BlogDetails({ payload }: Props) {
       </div>
 
       {/* ARTICLE CONTENT */}
-      <article>
-        <div
-          dangerouslySetInnerHTML={{ __html: payload?.content }}
-          className="
-    prose prose-sm sm:prose-base max-w-none
-    text-justify text-gray-500
-    leading-7
-    break-all
-
-    prose-p:mb-4
-    prose-p:leading-7
-
-    prose-headings:mt-6
-    prose-headings:mb-3
-    prose-headings:font-semibold
-    prose-headings:text-gray-900
-
-    prose-ul:pl-5
-    prose-ol:pl-5
-
-    prose-li:mb-2
-    prose-li:leading-7
-
-    prose-strong:text-gray-900
-    prose-a:text-primary
-  "
-        />
+      <article className="max-w-none prose prose-lg prose-gray">
+        {parse(payload?.content)}
       </article>
     </div>
   );

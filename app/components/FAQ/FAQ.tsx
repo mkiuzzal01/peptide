@@ -92,8 +92,11 @@ export default function FAQ({ faqs }: Props) {
                 {faq.question}
               </AccordionTrigger>
 
-              <AccordionContent className="text-gray-500 text-sm leading-relaxed pb-3">
-                <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+              <AccordionContent className="pb-3 text-sm leading-relaxed text-gray-500">
+                <div
+                  className="break-all"
+                  dangerouslySetInnerHTML={{ __html: faq.answer }}
+                />
               </AccordionContent>
             </AccordionItem>
           ))}

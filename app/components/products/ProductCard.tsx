@@ -2,7 +2,7 @@
 
 import Action from "../buttons/Action";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 import prodcutImage from "@/public/products/products.png";
 import Image from "next/image";
 import { IProduct } from "@/redux/types";
@@ -12,7 +12,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.cart);
 
   // const handleAddToCart = () => {
@@ -73,26 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <p className="font-normal">From $ {product?.from_price}</p>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <Link href={`/products/${product?.slug}`}>
-              <Action
-                name="View Details"
-                title="View Details"
-                className="
-                h-8
-                px-2
-                rounded-full
-                border border-gray-200
-                bg-white
-                text-gray-700
-                text-sm font-semibold
-                hover:bg-gray-100
-                transition-all duration-200
-                flex items-center justify-center
-              "
-              />
-            </Link>
-
+          <div className="flex items-center justify-center">
             {/* <Action
             onClick={handleAddToCart}
             name="Add to Cart"
@@ -116,7 +97,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Product Image */}
-        <div className="flex items-center justify-center p-3">
+        <div className="flex items-center justify-center">
           <Image
             src={product?.thumbnail || prodcutImage}
             alt={product?.name || ""}
@@ -131,6 +112,26 @@ export default function ProductCard({ product }: ProductCardProps) {
             group-hover:scale-105
           "
           />
+        </div>
+        <div className="flex justify-center items-center py-4">
+          <Link href={`/products/${product?.slug}`}>
+            <Action
+              name="View Details"
+              title="View Details"
+              className="
+                h-8
+                px-2
+                rounded-full
+                border border-gray-200
+                bg-white
+                text-gray-700
+                text-sm font-semibold
+                hover:bg-gray-100
+                transition-all duration-200
+                flex items-center justify-center
+              "
+            />
+          </Link>
         </div>
       </div>
     </Link>

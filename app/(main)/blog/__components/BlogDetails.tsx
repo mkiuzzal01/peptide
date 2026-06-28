@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default function BlogDetails({ payload }: Props) {
-  console.log(parse(payload?.content));
   return (
     <div className="py-4">
       <div className="space-y-6 text-center">
@@ -34,7 +33,7 @@ export default function BlogDetails({ payload }: Props) {
       </div>
 
       {/* ARTICLE CONTENT */}
-      <article className="max-w-none prose prose-lg prose-gray">
+      <article className="max-w-none prose prose-md prose-gray">
         {parse(payload?.content)}
       </article>
     </div>

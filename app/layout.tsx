@@ -4,6 +4,7 @@ import "./globals.css";
 import ReduxProvider from "@/redux/provider";
 import { getSystemInfo } from "@/actions/quires/system_info.api";
 import FaviconProvider from "./components/provider/FaviconProvider";
+import PopupProvider from "./components/provider/PopupProvider";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -35,7 +36,9 @@ export default async function RootLayout({
     >
       <body>
         <FaviconProvider systemInfo={systemInfo} />
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <PopupProvider>{children}</PopupProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

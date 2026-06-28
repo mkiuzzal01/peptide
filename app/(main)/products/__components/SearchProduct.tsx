@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, useTransition, useRef } from "react";
+import { useEffect, useState, useTransition, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
-// Define your defaults here for easier maintenance
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 500;
 
@@ -27,7 +27,8 @@ export default function SearchProduct() {
   );
   const [sort, setSort] = useState(searchParams.get("sort_by") || "");
 
-  const buildParams = () => {
+  // Memoize buildParams so it safely captures the latest state
+  const buildParams = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
 
     if (search) params.set("search", search);
@@ -37,7 +38,6 @@ export default function SearchProduct() {
     let max = maxPrice;
     if (min > max) [min, max] = [max, min];
 
-    // Only include price query params if they differ from default values
     if (min === DEFAULT_MIN && max === DEFAULT_MAX) {
       params.delete("min_price");
       params.delete("max_price");
@@ -50,9 +50,9 @@ export default function SearchProduct() {
     else params.delete("sort_by");
 
     return params;
-  };
+  }, [search, minPrice, maxPrice, sort, searchParams]);
 
-  // SINGLE CONTROLLED EFFECT (NO LOOP)
+  // Sync state changes with the URL layout safely
   useEffect(() => {
     if (lockRef.current) return;
 
@@ -65,14 +65,13 @@ export default function SearchProduct() {
         router.replace(`?${params.toString()}`, { scroll: false });
       });
 
-      // unlock after navigation settles
       setTimeout(() => {
         lockRef.current = false;
       }, 300);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [search, minPrice, maxPrice, sort]);
+  }, [buildParams, router]);
 
   const handleSort = (value: string) => {
     setSort((prev) => (prev === value ? "" : value));
@@ -107,14 +106,18 @@ export default function SearchProduct() {
           </span>
         </div>
 
-        <Input
-          type="range"
+        <Slider
+          value={[minPrice, maxPrice]}
+          onValueChange={(value) => {
+            const [min, max] = value as readonly number[];
+            setMinPrice(min);
+            setMaxPrice(max);
+          }}
           min={DEFAULT_MIN}
           max={DEFAULT_MAX}
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(Number(e.target.value))}
+          step={1}
+          className="w-full"
         />
-
         <div className="flex gap-3">
           <Input
             type="number"

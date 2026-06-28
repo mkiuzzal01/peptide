@@ -174,17 +174,6 @@ export default function Footer({
                   {link.title}
                 </Link>
               ))}
-
-              {/* MANUFACTURING PROOF LINK (NEW) */}
-              {proofData && (
-                <a
-                  href={`${proofData?.manufacturing_proof}`}
-                  target="_blank"
-                  className="text-sm text-[#637381] transition hover:text-[#037FFF]"
-                >
-                  Manufacturing Proof
-                </a>
-              )}
             </div>
           </div>
         </div>

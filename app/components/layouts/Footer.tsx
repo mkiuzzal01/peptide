@@ -80,7 +80,7 @@ export default function Footer({
             />
 
             {/* SOCIAL */}
-            <div className="mt-2 flex items-center gap-3">
+            {/* <div className="mt-2 flex items-center gap-3">
               {socials.map((item, i) => {
                 const Icon = item.icon;
 
@@ -102,7 +102,7 @@ export default function Footer({
                   </a>
                 );
               })}
-            </div>
+            </div> */}
           </div>
 
           {/* MIDDLE */}

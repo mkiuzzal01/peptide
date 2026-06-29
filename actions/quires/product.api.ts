@@ -7,6 +7,12 @@ export const getProducts = (params: URLSearchParams | null) =>
     revalidate: 60,
   });
 
+export const getProductsList = () =>
+  api.get<any>(`/products`, {
+    tags: ["product"],
+    revalidate: 60,
+  });
+
 export const getProductBySlug = (slug: string) =>
   api.get<any>(`/products/${slug}`, {
     tags: ["product"],

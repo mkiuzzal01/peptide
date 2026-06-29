@@ -20,9 +20,7 @@ export function AnnouncementDialog() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleAccept = () => {
-    if (rememberMe) {
-      popupStorage.markSeen();
-    }
+    popupStorage.markSeen();
     dispatch(closeAnnouncement());
   };
 

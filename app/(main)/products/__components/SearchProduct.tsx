@@ -78,11 +78,9 @@ export default function SearchProduct() {
   };
 
   return (
-    <div className="w-full bg-white max-w-md rounded-3xl border border-border p-6 shadow-sm">
+    <div className="w-full bg-white rounded-3xl ">
       {/* SEARCH */}
       <div className="space-y-2">
-        <Label>Search Products</Label>
-
         <div className="relative">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
 
@@ -97,7 +95,7 @@ export default function SearchProduct() {
       </div>
 
       {/* PRICE */}
-      <div className="mt-6 space-y-4">
+      {/* <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between">
           <Label>Price Range</Label>
 
@@ -131,10 +129,10 @@ export default function SearchProduct() {
             onChange={(e) => setMaxPrice(Number(e.target.value))}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* SORT */}
-      <div className="mt-6 space-y-4">
+      {/* <div className="mt-6 space-y-4">
         <Label>Sort By</Label>
 
         <div className="space-y-3">
@@ -154,7 +152,7 @@ export default function SearchProduct() {
             <Label>Price: High to Low</Label>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
